@@ -1,0 +1,515 @@
+/*
+ * css重置
+ */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+	margin    : 0;
+	padding   : 0;
+	font-size : 14px;
+}
+
+body, button, input, select, textarea {
+	font : 12px/1.5tahoma, arial, \5b8b\4f53;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-size : 100%;
+}
+
+address, cite, dfn, em, var {
+	font-style : normal;
+}
+
+code, kbd, pre, samp {
+	font-family : couriernew, courier, monospace;
+}
+
+small {
+	font-size : 12px;
+}
+
+ul, ol {
+	list-style : none;
+}
+
+a {
+	text-decoration : none;
+}
+
+a:hover {
+	text-decoration : underline;
+}
+
+sup {
+	vertical-align : text-top;
+}
+
+sub {
+	vertical-align : text-bottom;
+}
+
+legend {
+	color : #000;
+}
+
+fieldset, img {
+	border : 0;
+}
+
+button, input, select, textarea {
+	font-size : 100%;
+}
+
+@function named($key,$prefix :'',$stuff:'') {
+	@return $prefix + "["+ $key+"]" + $stuff + ", " + $prefix+"." + $key + $stuff;
+}
+
+// colors Maps
+$colors : (
+	"black":#000,
+	"dark":#222,
+	"text":#393d41,
+	"white":#fff
+);
+
+#{named(flex-row)} {
+	display        : flex;
+	flex-direction : row;
+}
+
+#{named(flex-column)} {
+	display        : flex;
+	flex-direction : column;
+}
+
+#{named(flex-wrap)} {
+	flex-wrap : wrap !important;
+}
+
+#{named(flex-grow)} {
+	flex-grow : 1;
+}
+
+#{named(flex-shrink)} {
+	flex-shrink : 0;
+}
+
+#{named(justify-content-center)} {
+	justify-content : center;
+}
+
+#{named(justify-content-start)} {
+	justify-content : start;
+}
+
+#{named(justify-content-end)} {
+	justify-content : flex-end;
+}
+
+#{named(justify-content-space-between)} {
+	justify-content : space-between;
+}
+
+#{named(justify-content-space-around)} {
+	justify-content : space-around;
+}
+
+#{named(justify-items-center)} {
+	justify-items : center;
+}
+
+#{named(align-items-center)} {
+	align-items : center;
+}
+
+#{named(align-items-stretch)} {
+	align-items : stretch;
+}
+
+#{named(align-self-center)} {
+	align-self : center;
+}
+
+#{named(align-self-stretch)} {
+	align-self : stretch;
+}
+
+$borderType : (
+	border-a:border,
+	border-l:border-left,
+	border-r:border-right,
+	border-t:border-top,
+	border-b:border-bottom
+);
+
+/*loop:colors*/
+@each $colorK, $colorV in $colors {
+	#{named(color-#{$colorK})} {
+		color : $colorV !important;
+	}
+
+	/**
+	 * div仿a标签鼠标hover样式
+	 */
+	#{named(cursor-pointer-text-#{$colorK})} {
+		color  : $colorV !important;
+		cursor : pointer !important;
+		&:hover {
+			opacity : 0.5 !important;
+		}
+	}
+
+	#{named(bg-color-#{$colorK})} {
+		background-color : $colorV !important;
+	}
+
+	@each $borderK, $borderV in $borderType {
+		#{named(#{$borderK}-#{$colorK})} {
+			#{$borderV}-color : $colorV !important;
+			#{$borderV}-style : solid;
+			#{$borderV}-width : thin;
+		}
+
+		#{named(#{$borderK}-dashed-#{$colorK})} {
+			#{$borderV}-color : $colorV !important;
+			#{$borderV}-style : dashed;
+			#{$borderV}-width : thin;
+		}
+
+	}
+
+	#{named(border-v-#{$colorK})} {
+		border-top-color    : $colorV !important;
+		border-top-style    : solid;
+		border-top-width    : thin;
+		border-bottom-color : $colorV !important;
+		border-bottom-style : solid;
+		border-bottom-width : thin;
+	}
+	#{named(border-h-#{$colorK})} {
+		border-left-color  : $colorV !important;
+		border-left-style  : solid;
+		border-left-width  : thin;
+		border-right-color : $colorV !important;
+		border-right-style : solid;
+		border-right-width : thin;
+	}
+
+	#{named(border-v-dashed-#{$colorK})} {
+		border-top-color    : $colorV !important;
+		border-top-style    : dashed;
+		border-top-width    : thin;
+		border-bottom-color : $colorV !important;
+		border-bottom-style : dashed;
+		border-bottom-width : thin;
+	}
+	#{named(border-h-dashed-#{$colorK})} {
+		border-left-color  : $colorV !important;
+		border-left-style  : dashed;
+		border-left-width  : thin;
+		border-right-color : $colorV !important;
+		border-right-style : dashed;
+		border-right-width : thin;
+	}
+}
+
+// font size Maps
+$fontSize : (
+	60:60px,
+	40:40px,
+	36:36px,
+	32:32px,
+	28:28px,
+	24:24px,
+	20:20px,
+	18:18px,
+	16:16px,
+	14:14px,
+	12:12px,
+	10:10px,
+	header:18px,
+	title:16px,
+	text:14px,
+	sub:12px,
+	min:10px
+);
+/*loop:font-size , line-height*/
+@each $fontK, $fontV in $fontSize {
+	#{named(font-size-#{$fontK})} {
+		font-size : $fontV
+	}
+}
+
+#{named(font-bold)} {
+	font-weight : bold;
+}
+
+#{named(font-bolder)} {
+	font-weight : bolder;
+}
+
+// 鼠标可点击text
+#{named(cursor-pointer-text)} {
+	&.mat-icon-button {
+		height      : auto;
+		line-height : 15px;
+		font-size   : 12px;
+	}
+}
+
+// space Size Maps
+$spaceSize : (
+	200:200px,
+	150:150px,
+	120:120px,
+	100:100px,
+	80:80px,
+	50:50px,
+	30:30px,
+	20:20px,
+	15:15px,
+	10:10px,
+	5:5px,
+	2:2px
+);
+$spaceType : (
+	p-a:padding,
+	p-l:padding-left,
+	p-r:padding-right,
+	p-t:padding-top,
+	p-b:padding-bottom,
+	m-a:margin,
+	m-l:margin-left,
+	m-r:margin-right,
+	m-t:margin-top,
+	m-b:margin-bottom
+);
+
+/*loop:spaceSize*/
+@each $sizeK, $sizeV in $spaceSize {
+	// m-a-normal => margin:15px;
+	@each $typeK, $typeV in $spaceType {
+		#{named(#{$typeK}-#{$sizeK})} {
+			#{$typeV}: $sizeV;
+		}
+	}
+	#{named(p-h-#{$sizeK})} {
+		padding-left  : $sizeV;
+		padding-right : $sizeV;
+	}
+	#{named(p-v-#{$sizeK})} {
+		padding-top    : $sizeV;
+		padding-bottom : $sizeV;
+	}
+	#{named(m-h-#{$sizeK})} {
+		margin-left  : $sizeV;
+		margin-right : $sizeV;
+	}
+	#{named(m-v-#{$sizeK})} {
+		margin-top    : $sizeV;
+		margin-bottom : $sizeV;
+	}
+}
+
+#{named(m-auto)} {
+	margin : auto;
+}
+
+// layout Maps
+$layoutType : (
+	w:width,
+	w-max:max-width,
+	w-min:min-width,
+	h:height,
+	h-max:max-height,
+	h-min:min-height,
+	line-h:line-height
+);
+
+/*loop:layout size*/
+@for $n from 1 through 10 {
+	// w-5 ==> width:5px; ...w-50 ,step 5
+	@each $layoutK, $layoutV in $layoutType {
+		#{named(#{$layoutK}-#{$n*5})} {
+			#{$layoutV}: $n*5px;
+		}
+	}
+
+	// w-60 => width:50px; ...w-150 , step 10
+	@each $layoutK, $layoutV in $layoutType {
+		#{named(#{$layoutK}-#{$n*10 + 50})} {
+			#{$layoutV}: $n*10px + 50px;
+		}
+	}
+
+	// w-160 => width:150px; ...w-250 , step 10
+	@each $layoutK, $layoutV in $layoutType {
+		#{named(#{$layoutK}-#{$n*10 + 150})} {
+			#{$layoutV}: $n*10px + 150px;
+		}
+	}
+
+	// w-300 => width:300px; ...w-750 , step 50
+	@each $layoutK, $layoutV in $layoutType {
+		#{named(#{$layoutK}-#{($n*50)+250})} {
+			#{$layoutV}: ($n*50px) + 250px;
+		}
+	}
+
+	// w-800 => width:800px; ...w-1700 , step 100
+	@each $layoutK, $layoutV in $layoutType {
+		#{named(#{$layoutK}-#{($n*100)+700})} {
+			#{$layoutV}: ($n*100px) + 700px;
+		}
+	}
+
+	// w-p-5 => width:5%; 5->50
+	@each $layoutK, $layoutV in $layoutType {
+		#{named(#{$layoutK}-per-#{$n*5})} {
+			#{$layoutV}: $n * 5%;
+		}
+	}
+
+	// w-p-10 => width:10%; 55->100
+	@each $layoutK, $layoutV in $layoutType {
+		#{named(#{$layoutK}-per-#{$n*5 + 50})} {
+			#{$layoutV}: $n * 5% + 50%;
+		}
+	}
+
+	// m-a-p-10 => margin:10%;
+	@each $typeK, $typeV in $spaceType {
+		#{named(#{$typeK}-per-#{$n*10})} {
+			#{$typeV} : $n * 10%;
+		}
+	}
+
+	#{named(p-h-per-#{$n*10})} {
+		padding-left  : $n * 10%;
+		padding-right : $n * 10%;
+	}
+	#{named(p-v-per-#{$n*10})} {
+		padding-top    : $n * 10%;
+		padding-bottom : $n * 10%;
+	}
+	#{named(m-h-per-#{$n*10})} {
+		margin-left  : $n * 10%;
+		margin-right : $n * 10%;
+	}
+	#{named(m-v-per-#{$n*10})} {
+		margin-top    : $n * 10%;
+		margin-bottom : $n * 10%;
+	}
+
+	// flex-basis-per-10 => flex-basis:10%;
+	#{named(flex-basis-per-#{$n*10})} {
+		flex-basis : $n*10%;
+	}
+
+	// flex-basis-20 => flex-basis:20px;
+	#{named(flex-basis-#{$n*20})} {
+		flex-basis : $n*20px;
+	}
+
+}
+
+#{named(w-auto)} {
+	width : auto !important;
+}
+
+#{named(h-auto)} {
+	height : auto !important;
+}
+
+/* 末尾溢出省略号, 1 到 10行 */
+@for $n from 1 through 10 {
+	#{named(line-#{$n})} {
+		overflow           : hidden;
+		display            : -webkit-box;
+		text-overflow      : ellipsis;
+		-webkit-box-orient : vertical;
+		-webkit-line-clamp : $n;
+	}
+}
+
+#{named(text-center)} {
+	text-align : center;
+}
+
+#{named(text-left)} {
+	text-align : left;
+}
+
+#{named(text-right)} {
+	text-align : right;
+}
+
+#{named(visibility-hidden)} {
+	visibility : hidden;
+}
+
+#{named(hidden)} {
+	display : none;
+}
+
+#{named(no-overflow)} {
+	overflow : hidden;
+}
+
+#{named(no-border)} {
+	border : none;
+}
+
+#{named(word-break)} {
+	word-wrap   : break-word;
+	word-break  : break-all;
+	white-space : initial;
+}
+
+#{named(img-cover-wrap)} {
+	overflow : hidden;
+	#{named(img-cover)} {
+		width      : 100%;
+		height     : 100%;
+		object-fit : cover;
+	}
+}
+
+#{named(overflow)} {
+	overflow : auto;
+}
+
+#{named(overflow-scroll)} {
+	overflow : scroll;
+}
+
+#{named(overflow-inherit)} {
+	overflow : inherit;
+}
+
+#{named(overflow-y)} {
+	overflow-y : auto;
+}
+
+#{named(overflow-y-scroll)} {
+	overflow-y : scroll;
+}
+
+#{named(overflow-y-inherit)} {
+	overflow-y : inherit;
+}
+
+#{named(position-relative)} {
+	position : relative;
+}
+
+#{named(position-absolute)} {
+	position : absolute;
+}
+
+#{named(cursor-pointer)} {
+	cursor : pointer;
+}
+
+#{named(no-select)} {
+	user-select : none;
+}
