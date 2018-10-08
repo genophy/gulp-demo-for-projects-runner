@@ -7,9 +7,9 @@ exports.FILE_PROP = {
 };
 
 exports.PORT = {
-	DEV_PORT: '9000',
-	RELEASE_PORT: '9100',
-	MOCK_PORT: '9500',
+	DEV_PORT: '8000',
+	RELEASE_PORT: '8100',
+	MOCK_PORT: '8500',
 };
 
 /*

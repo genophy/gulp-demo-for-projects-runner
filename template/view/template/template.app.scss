@@ -1,5 +1,5 @@
-@import "../../style/scss/site";
+@import "../../shared/style/variable";
 
 button {
-	padding : 10px;
+	padding : map_get($fontSize,20);
 }

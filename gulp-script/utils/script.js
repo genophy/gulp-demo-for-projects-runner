@@ -1,24 +1,27 @@
 'use strict';
-const autoprefixer = require('gulp-autoprefixer');
-const cleanCSS     = require('gulp-clean-css');
-const fs           = require('fs');
-const gulp         = require('gulp');
-const htmlmin      = require('gulp-htmlmin');
 // const imagemin         = require('imagemin');
 // const imageminJpegtran = require('imagemin-jpegtran');
 // const imageminPngquant = require('imagemin-pngquant');
-const named          = require('vinyl-named');
-const plumber        = require('gulp-plumber');
-const rename         = require('gulp-rename');
-const replace        = require('gulp-replace');
-const scss           = require('gulp-sass');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const webpack        = require('webpack-stream');
+const fs               = require('fs');
+const gulp             = require('gulp');
+const gulpAutoPreFixer = require('gulp-autoprefixer');
+const gulpClean        = require('gulp-clean');
+const gulpCleanCSS     = require('gulp-clean-css');
+const htmlMin          = require('gulp-htmlmin');
+const named            = require('vinyl-named');
+const plumber          = require('gulp-plumber');
+const rename           = require('gulp-rename');
+const replace          = require('gulp-replace');
+const scss             = require('gulp-sass');
+const UglifyJsPlugin   = require('uglifyjs-webpack-plugin');
+const webpack          = require('webpack-stream');
 
 const Config = require('./config');
 
 /**
- * 是否已经存在该文件夹
+ *  是否已经存在该文件夹
+ * @param {string} aPath
+ * @return {*}
  */
 const isDirSync = function (aPath) {
 	try {
@@ -32,48 +35,8 @@ const isDirSync = function (aPath) {
 	}
 };
 
-/*
- * 将 cmpt3rd 复制 dest目录
- */
-exports.cmpt3rd = function (projectName) {
-	projectName = projectName ? projectName : Config.gulpArgumentNameExist(
-		process,
-		'project'
-	);
-	if (!projectName) {
-		throw new Error('cmpt3rd no projectname');
-	}
-	let srcPath = './public/cmpt3rd/**/*',
-		devPath = './dest/dev/#project#/public/cmpt3rd/'.replace(
-			'#project#',
-			projectName
-		);
-	return gulp.src(srcPath)
-		.pipe(gulp.dest(devPath));
-};
 
-/*
- * 将 cmpt3rd 复制 dest目录 (release)
- */
-exports.cmpt3rd_release = function (projectName) {
-	projectName = projectName ? projectName : Config.gulpArgumentNameExist(
-		process,
-		'project'
-	);
-	if (!projectName) {
-		throw new Error('cmpt3rd_release no projectname');
-	}
-	let srcPath     = './public/cmpt3rd/**/*',
-		releasePath = './dest/release/#project#/public/cmpt3rd/'.replace(
-			'#project#',
-			projectName
-		);
-	return gulp.src(srcPath)
-		.pipe(gulp.dest(releasePath));
-
-};
-
-/*
+/**
  * 初始化项目
  *
  *    command:    gulp create:init --project=<projectname>
@@ -84,6 +47,8 @@ exports.cmpt3rd_release = function (projectName) {
  *   |-----scss
  *   |-------site.scss
  *
+ * @param {string} projectName
+ * @return {*}
  */
 
 exports.create_init = function (projectName) {
@@ -104,10 +69,9 @@ exports.create_init = function (projectName) {
 		gulp.src('./template/res/**/*')
 			.pipe(gulp.dest(projectPath.concat('res')));
 	}
-
 };
 
-/*
+/**
  * 创建项目下的模块
  *
  *    command:    gulp create:view --project=<projectname> --name=<viewname>
@@ -119,6 +83,9 @@ exports.create_init = function (projectName) {
  *    |-----viewname.app.js
  *    |-----viewname.app.scss
  *
+ * @param {string} projectName
+ * @param {string} viewName
+ * @return {*}
  */
 exports.create_view = function (projectName, viewName) {
 	projectName = projectName ? projectName : Config.gulpArgumentNameExist(
@@ -158,12 +125,47 @@ exports.create_view = function (projectName, viewName) {
 		.pipe(gulp.dest(projectViewPath.concat(viewName)));
 };
 
-/*
+
+/**
+ * 清空dev目录
+ * @param {string} projectName
+ * @return {*}
+ */
+exports.clean = function (projectName) {
+	projectName = projectName ||
+		Config.gulpArgumentNameExist(process, 'project');
+	if (!projectName) {
+		throw new Error('clean no projectname');
+	}
+	const devPath = './dest/dev/#project#/'.replace('#project#', projectName);
+	return gulp.src(devPath, {read: false})
+		.pipe(gulpClean());
+};
+
+/**
  *
- *
+ * 清空release目录
+ * @param {string} projectName
+ * @return {*}
+ */
+exports.clean_release = function (projectName) {
+	projectName = projectName ||
+		Config.gulpArgumentNameExist(process, 'project');
+	if (!projectName) {
+		throw new Error('clean_release no projectname');
+	}
+	const releasePath = './dest/release/#project#/'.replace('#project#', projectName);
+	return gulp.src(releasePath, {read: false})
+		.pipe(gulpClean());
+
+};
+
+
+/**
  * 将 *.app.html 复制替换为 dest目录下的*.html
- *
- *
+ * @param {string} projectName
+ * @param {string} singleFile
+ * @return {*}
  */
 exports.html = function (projectName, singleFile) {
 	projectName = projectName ||
@@ -184,14 +186,15 @@ exports.html = function (projectName, singleFile) {
 			path.dirname  = path.basename;
 		}))
 		.pipe(gulp.dest(devPath));
+
 };
 
-/*
- *
+/**
  *
  * 将 *.app.html 复制替换为 dest目录下的*.html (release)
- *
- *
+ * @param {string} projectName
+ * @param {string} singleFile
+ * @return {*}
  */
 exports.html_release = function (projectName, singleFile) {
 	projectName = projectName ||
@@ -214,13 +217,16 @@ exports.html_release = function (projectName, singleFile) {
 			path.basename = path.basename.replace('.app', '');
 			path.dirname  = path.basename;
 		}))
-		.pipe(htmlmin({collapseWhitespace: true, removeComments: true, minifyJS: true, minifyCSS: true}))
+		.pipe(htmlMin({collapseWhitespace: true, removeComments: true, minifyJS: true, minifyCSS: true}))
 		.pipe(gulp.dest(releasePath));
 };
 
-/*
+
+/**
  * 图片复制
- *
+ * @param {string} projectName
+ * @param {string} singleFile
+ * @return {*}
  */
 exports.img = function (projectName, singleFile) {
 	projectName = projectName ||
@@ -245,9 +251,11 @@ exports.img = function (projectName, singleFile) {
 		.pipe(gulp.dest(devPath));
 };
 
-/*
+/**
  * 图片复制
- *
+ * @param {string} projectName
+ * @param {string} singleFile
+ * @return {*}
  */
 exports.img_release = function (projectName, singleFile) {
 	projectName = projectName ||
@@ -278,8 +286,11 @@ exports.img_release = function (projectName, singleFile) {
 		.pipe(gulp.dest(releasePath));
 };
 
-/*
+/**
  * json复制
+ * @param {string} projectName
+ * @param {string} singleFile
+ * @return {*}
  */
 exports.json = function (projectName, singleFile) {
 	projectName = projectName ||
@@ -304,8 +315,11 @@ exports.json = function (projectName, singleFile) {
 		.pipe(gulp.dest(devPath));
 };
 
-/*
+/**
  * json复制
+ * @param {string} projectName
+ * @param {string} singleFile
+ * @return {*}
  */
 exports.json_release = function (projectName, singleFile) {
 	projectName = projectName ||
@@ -330,7 +344,7 @@ exports.json_release = function (projectName, singleFile) {
 		.pipe(gulp.dest(releasePath));
 };
 
-/*
+/**
  * 脚本编译
  *
  * 将 *.app.scss 编译成为同目录下的*.app.css
@@ -339,6 +353,9 @@ exports.json_release = function (projectName, singleFile) {
  *
  *
  * *.app.css <_ *.app.scss
+ * @param {string} projectName
+ * @param {string} singleFile
+ * @return {*}
  */
 exports.scss = function (projectName, singleFile) {
 	projectName = projectName ||
@@ -359,7 +376,7 @@ exports.scss = function (projectName, singleFile) {
 	return gulp.src(srcPath)
 		.pipe(plumber())
 		.pipe(scss())
-		.pipe(autoprefixer())
+		.pipe(gulpAutoPreFixer())
 		.pipe(rename(function (path) {
 			path.basename = path.basename.replace('.app', '');
 			path.dirname  = path.basename;
@@ -367,7 +384,45 @@ exports.scss = function (projectName, singleFile) {
 		.pipe(gulp.dest(devPath));
 };
 
-/*
+
+/**
+ * 脚本编译
+ *
+ * 将 *.app.scss 编译成为同目录下的*.app.css
+ *
+ * 优先级 (最大级若存在且不为空文件，则只编译最大级别到 *.app.css。若*.app.js以上级别的文件都为空文件，则不进行编译 )
+ *
+ *
+ * *.app.css <_ *.app.scss
+ * @param {string} projectName
+ * @param {string} singleFile
+ * @return {*}
+ */
+exports.scss_shared = function (projectName, singleFile) {
+	projectName = projectName ||
+		Config.gulpArgumentNameExist(process, 'project');
+	singleFile  = singleFile ||
+		Config.gulpArgumentNameExist(process, 'singlefile');
+	if (!projectName) {
+		throw new Error('scss_shared no projectname');
+	}
+	let srcPath   = './src/#project#/shared/style/'.replace('#project#', projectName);
+	const devPath = srcPath.replace('./src', './dest/dev');
+	// 若是单个文件，则src改成单文件路径
+	srcPath       = singleFile || srcPath.concat('**/*.scss');
+
+	return gulp.src(srcPath)
+		.pipe(plumber())
+		.pipe(scss({outputStyle: 'compressed'}))
+		.pipe(gulpAutoPreFixer())
+		.pipe(rename(function (path) {
+			// path.basename = path.basename.replace('.app', '');
+			// path.dirname  = path.basename;
+		}))
+		.pipe(gulp.dest(devPath));
+};
+
+/**
  * 脚本编译 (release)
  *
  * 将 *.app.scss 编译成为同目录下的*.app.css
@@ -376,6 +431,9 @@ exports.scss = function (projectName, singleFile) {
  *
  *
  * *.app.css <_ *.app.scss
+ * @param {string} projectName
+ * @param {string} singleFile
+ * @return {*}
  */
 exports.scss_release = function (projectName, singleFile) {
 	projectName = projectName ||
@@ -396,17 +454,60 @@ exports.scss_release = function (projectName, singleFile) {
 	return gulp.src(srcPath)
 		.pipe(plumber())
 		.pipe(scss())
-		.pipe(autoprefixer())
+		.pipe(gulpAutoPreFixer())
 		.pipe(rename(function (path) {
 			path.basename = path.basename.replace('.app', '');
 			path.dirname  = path.basename;
 		}))
-		.pipe(cleanCSS({compatibility: 'ie8'}))
+		.pipe(gulpCleanCSS({compatibility: 'ie8'}))
 		.pipe(gulp.dest(releasePath));
 };
 
-/*
+
+/**
+ * 脚本编译 (release)
+ *
+ * 将 *.app.scss 编译成为同目录下的*.app.css
+ *
+ * 优先级 (最大级若存在且不为空文件，则只编译最大级别到 *.app.css。若*.app.js以上级别的文件都为空文件，则不进行编译 )
+ *
+ *
+ * *.app.css <_ *.app.scss
+ * @param {string} projectName
+ * @param {string} singleFile
+ * @return {*}
+ */
+exports.scss_shared_release = function (projectName, singleFile) {
+	projectName = projectName ||
+		Config.gulpArgumentNameExist(process, 'project');
+	singleFile  = singleFile ||
+		Config.gulpArgumentNameExist(process, 'singlefile');
+	if (!projectName) {
+		throw new Error('scss_release no projectname');
+	}
+	var srcPath     = './src/#project#/shared/style/'.replace('#project#', projectName),
+		releasePath = srcPath.replace('./src', './dest/release');
+	// 若是单个文件，则src改成单文件路径
+	srcPath         = singleFile || srcPath.concat('**/*.scss');
+
+	return gulp.src(srcPath)
+		.pipe(plumber())
+		.pipe(scss({outputStyle: 'compressed'}))
+		.pipe(gulpAutoPreFixer())
+		.pipe(rename(function (path) {
+			// path.basename = path.basename.replace('.app', '');
+			// path.dirname  = path.basename;
+		}))
+		.pipe(gulpCleanCSS({compatibility: 'ie8'}))
+		.pipe(gulp.dest(releasePath));
+};
+
+/**
  * webpack  编译
+ *
+ * @param {string} projectName
+ * @param {string} singleFile
+ * @return {*}
  */
 exports.webpack = function (projectName, singleFile) {
 	projectName = projectName ||
@@ -457,8 +558,11 @@ exports.webpack = function (projectName, singleFile) {
 };
 
 
-/*
+/**
  * webpack  编译  (release)
+ * @param {string} projectName
+ * @param {string} singleFile
+ * @return {*}
  */
 exports.webpack_release = function (projectName, singleFile) {
 	projectName = projectName ||
@@ -509,8 +613,11 @@ exports.webpack_release = function (projectName, singleFile) {
 		.pipe(gulp.dest(releasePath));
 };
 
-/*
+/**
  * webpack shared  编译
+ * @param {string} projectName
+ * @param {string} singleFile
+ * @return {*}
  */
 exports.webpack_shared = function (projectName, singleFile) {
 	projectName = projectName ||
@@ -520,7 +627,7 @@ exports.webpack_shared = function (projectName, singleFile) {
 	if (!projectName) {
 		throw new Error('webpack_shared no projectname');
 	}
-	let srcPath = './src/#project#/shared-js/'.replace('#project#', projectName),
+	let srcPath = './src/#project#/shared/js/'.replace('#project#', projectName),
 		devPath = srcPath.replace('./src', './dest/dev');
 	// 若是单个文件，则src改成单文件路径
 	srcPath     = singleFile || srcPath.concat('**/*.js');
@@ -539,8 +646,11 @@ exports.webpack_shared = function (projectName, singleFile) {
 		.pipe(gulp.dest(devPath));
 };
 
-/*
+/**
  * webpack shared  编译
+ * @param {string} projectName
+ * @param {string} singleFile
+ * @return {*}
  */
 exports.webpack_shared_release = function (projectName, singleFile) {
 	projectName = projectName ||
@@ -550,7 +660,7 @@ exports.webpack_shared_release = function (projectName, singleFile) {
 	if (!projectName) {
 		throw new Error('webpack_shared_release no projectname');
 	}
-	let srcPath     = './src/#project#/shared-js/'.replace('#project#', projectName),
+	let srcPath     = './src/#project#/shared/js/'.replace('#project#', projectName),
 		releasePath = srcPath.replace('./src', './dest/release');
 	// 若是单个文件，则src改成单文件路径
 	srcPath         = singleFile || srcPath.concat('**/*.js');
@@ -565,5 +675,50 @@ exports.webpack_shared_release = function (projectName, singleFile) {
 				]
 			}
 		}))
+		.pipe(gulp.dest(releasePath));
+};
+
+
+/**
+ * 将 cmpt3rd 复制 dest目录
+ * @param {string} projectName
+ * @return {*}
+ */
+exports.cmpt3rd = function (projectName) {
+	projectName = projectName ? projectName : Config.gulpArgumentNameExist(
+		process,
+		'project'
+	);
+	if (!projectName) {
+		throw new Error('cmpt3rd no projectname');
+	}
+	let srcPath = './public/cmpt3rd/**/*',
+		devPath = './dest/dev/#project#/public/cmpt3rd/'.replace(
+			'#project#',
+			projectName
+		);
+	return gulp.src(srcPath)
+		.pipe(gulp.dest(devPath));
+};
+
+/**
+ * 将 cmpt3rd 复制 dest目录 (release)
+ * @param {string} projectName
+ * @return {*}
+ */
+exports.cmpt3rd_release = function (projectName) {
+	projectName = projectName ? projectName : Config.gulpArgumentNameExist(
+		process,
+		'project'
+	);
+	if (!projectName) {
+		throw new Error('cmpt3rd_release no projectname');
+	}
+	let srcPath     = './public/cmpt3rd/**/*',
+		releasePath = './dest/release/#project#/public/cmpt3rd/'.replace(
+			'#project#',
+			projectName
+		);
+	return gulp.src(srcPath)
 		.pipe(gulp.dest(releasePath));
 };

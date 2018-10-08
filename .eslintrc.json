@@ -1,5 +1,15 @@
 {
-	"extends": "google",
+	"env": {
+		"browser": true,
+		"commonjs": true,
+		"es6": true,
+		"jquery": true,
+		"node": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"./node_modules/eslint-config-google/index.js"
+	],
 	"parserOptions": {
 		"ecmaVersion": 6,
 		"sourceType": "module",
@@ -8,13 +18,19 @@
 		}
 	},
 	"rules": {
-		"no-var": 0,
-		"comma-dangle": 0,
-		"arrow-parens": 0,
-		"no-tabs": 0,
-		"no-multi-spaces": 0,
-		"max-len": 0,
-		"key-spacing": 0,
-		"one-var": 0
+		"arrow-parens": "off",
+		"comma-dangle": "off",
+		"indent": "off",
+		"key-spacing": "off",
+		"max-len": "off",
+		"no-console": "warn",
+		"no-mixed-spaces-and-tabs": "off",
+		"no-multi-spaces": "off",
+		"no-tabs": "off",
+		"no-var": "warn",
+		"one-var": "off",
+		"padded-blocks": "off",
+		"space-before-function-paren": "off",
+		"spaced-comment": "off"
 	}
 }

@@ -1,14 +1,70 @@
+@import "variable";
+
+/*
+ * css重置
+ */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+	margin    : 0;
+	padding   : 0;
+	font-size : 14px;
+}
+
+body, button, input, select, textarea {
+	font-size   : 12px;
+	font-family : Tahoma, arial;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-size : 100%;
+}
+
+address, cite, dfn, em, var {
+	font-style : normal;
+}
+
+code, kbd, pre, samp {
+	font-family : couriernew, courier, monospace;
+}
+
+small {
+	font-size : 12px;
+}
+
+ul, ol {
+	list-style : none;
+}
+
+a {
+	text-decoration : none;
+}
+
+a:hover {
+	text-decoration : underline;
+}
+
+sup {
+	vertical-align : text-top;
+}
+
+sub {
+	vertical-align : text-bottom;
+}
+
+legend {
+	color : #000;
+}
+
+fieldset, img {
+	border : 0;
+}
+
+button, input, select, textarea {
+	font-size : 100%;
+}
+
 @function named($key,$prefix :'',$stuff:'') {
 	@return $prefix + "["+ $key+"]" + $stuff + ", " + $prefix+"." + $key + $stuff;
 }
-
-// colors Maps
-$colors : (
-	"black":#000,
-	"dark":#222,
-	"text":#393d41,
-	"white":#fff
-);
 
 #{named(flex-row)} {
 	display        : flex;
@@ -71,14 +127,6 @@ $colors : (
 #{named(align-self-stretch)} {
 	align-self : stretch;
 }
-
-$borderType : (
-	border-a:border,
-	border-l:border-left,
-	border-r:border-right,
-	border-t:border-top,
-	border-b:border-bottom
-);
 
 /*loop:colors*/
 @each $colorK, $colorV in $colors {
@@ -151,26 +199,6 @@ $borderType : (
 	}
 }
 
-// font size Maps
-$fontSize : (
-	60:60px,
-	40:40px,
-	36:36px,
-	32:32px,
-	28:28px,
-	24:24px,
-	20:20px,
-	18:18px,
-	16:16px,
-	14:14px,
-	12:12px,
-	10:10px,
-	header:18px,
-	title:16px,
-	text:14px,
-	sub:12px,
-	min:10px
-);
 /*loop:font-size , line-height*/
 @each $fontK, $fontV in $fontSize {
 	#{named(font-size-#{$fontK})} {
@@ -194,34 +222,6 @@ $fontSize : (
 		font-size   : 12px;
 	}
 }
-
-// space Size Maps
-$spaceSize : (
-	200:200px,
-	150:150px,
-	120:120px,
-	100:100px,
-	80:80px,
-	50:50px,
-	30:30px,
-	20:20px,
-	15:15px,
-	10:10px,
-	5:5px,
-	2:2px
-);
-$spaceType : (
-	p-a:padding,
-	p-l:padding-left,
-	p-r:padding-right,
-	p-t:padding-top,
-	p-b:padding-bottom,
-	m-a:margin,
-	m-l:margin-left,
-	m-r:margin-right,
-	m-t:margin-top,
-	m-b:margin-bottom
-);
 
 /*loop:spaceSize*/
 @each $sizeK, $sizeV in $spaceSize {
@@ -252,17 +252,6 @@ $spaceType : (
 #{named(m-auto)} {
 	margin : auto;
 }
-
-// layout Maps
-$layoutType : (
-	w:width,
-	w-max:max-width,
-	w-min:min-width,
-	h:height,
-	h-max:max-height,
-	h-min:min-height,
-	line-h:line-height
-);
 
 /*loop:layout size*/
 @for $n from 1 through 10 {

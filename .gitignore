@@ -1,7 +1,8 @@
-.DS_Store
+.DS_Store/
 .gulp-scss-cache/
-.idea
+.idea/
 .sass-cache/
-/dest
-/node_modules
+dest/
+node_modules/
+package-lock.json
 yarn.lock

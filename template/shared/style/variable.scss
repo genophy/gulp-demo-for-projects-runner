@@ -1,0 +1,80 @@
+
+// colors Maps
+$colors : (
+		"black":#000,
+		"dark":#222,
+		"text":#393d41,
+		"white":#fff
+);
+
+
+$borderType : (
+		border-a:border,
+		border-l:border-left,
+		border-r:border-right,
+		border-t:border-top,
+		border-b:border-bottom
+);
+
+// font size Maps
+$fontSize : (
+		60:60px,
+		40:40px,
+		36:36px,
+		32:32px,
+		28:28px,
+		24:24px,
+		20:20px,
+		18:18px,
+		16:16px,
+		14:14px,
+		12:12px,
+		10:10px,
+		header:18px,
+		title:16px,
+		text:14px,
+		sub:12px,
+		min:10px
+);
+
+
+// space Size Maps
+$spaceSize : (
+		200:200px,
+		150:150px,
+		120:120px,
+		100:100px,
+		80:80px,
+		50:50px,
+		30:30px,
+		20:20px,
+		15:15px,
+		10:10px,
+		5:5px,
+		2:2px
+);
+$spaceType : (
+		p-a:padding,
+		p-l:padding-left,
+		p-r:padding-right,
+		p-t:padding-top,
+		p-b:padding-bottom,
+		m-a:margin,
+		m-l:margin-left,
+		m-r:margin-right,
+		m-t:margin-top,
+		m-b:margin-bottom
+);
+
+
+
+// layout Maps
+$layoutType : (
+		w:width,
+		w-max:max-width,
+		w-min:min-width,
+		h:height,
+		h-max:max-height,
+		h-min:min-height,
+		line-h:line-height
+);

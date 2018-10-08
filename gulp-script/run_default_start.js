@@ -1,6 +1,4 @@
-const gulp   = require('gulp'),
-	  Config = require('./utils/config'),
-	  Script = require('./utils/script');
+const gulp = require('gulp');
 
 /**
  *  默认执行
@@ -8,7 +6,7 @@ const gulp   = require('gulp'),
  *
  */
 gulp.task(
-	'default_start',gulp.series('scss','webpack_shared', 'webpack',
+	'default_start', gulp.series('clean', 'scss_shared', 'scss', 'webpack_shared', 'webpack',
 		'img', 'json', 'html', 'cmpt3rd'));
 
 /**
@@ -17,5 +15,5 @@ gulp.task(
  *
  */
 gulp.task(
-	'default_start:release' , gulp.series('scss:release', 'webpack_shared:release', 'webpack:release',
+	'default_start:release', gulp.series('clean:release', 'scss_shared:release', 'scss:release', 'webpack_shared:release', 'webpack:release',
 		'img:release', 'json:release', 'html:release', 'cmpt3rd:release'));
