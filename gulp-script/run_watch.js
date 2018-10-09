@@ -58,15 +58,15 @@ gulp.task('watch', function () {
 					Script.img(projectName, singleFile);
 				});
 
-			// res - json
-			gulp.watch([resPath.concat('json/**/*')])
+			// res - exclude img
+			gulp.watch([resPath.concat('**/*'), '!'.concat(resPath).concat('img/**/*')])
 				.on('change', function (file) {
 					const singleFile = file.replace(
 						currentDir,
 						''
 					);
 					console.log('changed:' + singleFile);
-					Script.json(projectName, singleFile);
+					Script.res(projectName, singleFile);
 				});
 
 			// src - scss
@@ -148,15 +148,15 @@ gulp.task('watch:release', function () {
 					Script.img_release(projectName, singleFile);
 				});
 
-			// res - json
-			gulp.watch([resPath.concat('json/**/*')])
+			// res - exclude img
+			gulp.watch([resPath.concat('**/*'), '!'.concat(resPath).concat('img/**/*')])
 				.on('change', function (file) {
 					const singleFile = file.replace(
 						currentDir,
 						''
 					);
 					console.log('changed:' + singleFile);
-					Script.json_release(projectName, singleFile);
+					Script.res_release(projectName, singleFile);
 				});
 
 			// src - scss

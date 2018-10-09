@@ -295,60 +295,55 @@ exports.img_release = function (projectName, singleFile) {
 };
 
 /**
- * json复制
+ * res复制，除了img子目录
  * @param {string} projectName
  * @param {string} singleFile
  * @return {*}
  */
-exports.json = function (projectName, singleFile) {
+exports.res = function (projectName, singleFile) {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	singleFile  = singleFile ||
 		Config.gulpArgumentNameExist(process, 'singlefile');
 	if (!projectName) {
-		throw new Error('json no projectname');
+		throw new Error('res no projectname');
 	}
-	let srcPath = './src/#project#/res/json/'.replace(
+	let srcPath = './src/#project#/res/'.replace(
 		'#project#',
 		projectName
 		),
-		devPath = srcPath.replace('./src', './dest/dev').replace(
-			'/style/',
-			'/res/'
-		);
+		devPath = srcPath.replace('./src', './dest/dev');
 	// 若是单个文件，则src改成单文件路径
 	srcPath     = singleFile || srcPath.concat('**/*');
-
-	return gulp.src(srcPath)
+	// 除了图片，其他res都直接复制
+	return gulp.src([srcPath, '!'.concat(srcPath.replace('**/*', 'img/**/*'))], {allowEmpty: true})
 		.pipe(gulp.dest(devPath));
 };
 
 /**
- * json复制
+ * res复制，除了img子目录
  * @param {string} projectName
  * @param {string} singleFile
  * @return {*}
  */
-exports.json_release = function (projectName, singleFile) {
+exports.res_release = function (projectName, singleFile) {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	singleFile  = singleFile ||
 		Config.gulpArgumentNameExist(process, 'singlefile');
 	if (!projectName) {
-		throw new Error('json no projectname');
+		throw new Error('res no projectname');
 	}
-	let srcPath     = './src/#project#/res/json/'.replace(
+	let srcPath     = './src/#project#/res/'.replace(
 		'#project#',
 		projectName
 		),
-		releasePath = srcPath.replace('./src', './dest/release').replace(
-			'/style/',
-			'/res/'
-		);
+		releasePath = srcPath.replace('./src', './dest/release');
 	// 若是单个文件，则src改成单文件路径
 	srcPath         = singleFile || srcPath.concat('**/*');
 
-	return gulp.src(srcPath)
+	// 除了图片，其他res都直接复制
+	return gulp.src([srcPath, '!'.concat(srcPath.replace('**/*', 'img/**/*'))], {allowEmpty: true})
 		.pipe(gulp.dest(releasePath));
 };
 

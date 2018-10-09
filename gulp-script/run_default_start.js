@@ -7,7 +7,7 @@ const gulp = require('gulp');
  */
 gulp.task(
 	'default_start', gulp.series('clean', 'scss_shared', 'scss', 'webpack_shared', 'webpack',
-		'img', 'json', 'html', 'cmpt3rd'));
+		'img', 'res', 'html', 'cmpt3rd'));
 
 /**
  *  默认执行(release)
@@ -16,4 +16,4 @@ gulp.task(
  */
 gulp.task(
 	'default_start:release', gulp.series('clean:release', 'scss_shared:release', 'scss:release', 'webpack_shared:release', 'webpack:release',
-		'img:release', 'json:release', 'html:release', 'cmpt3rd:release'));
+		'img:release', 'res:release', 'html:release', 'cmpt3rd:release'));
