@@ -1,7 +1,9 @@
 'use strict';
-// const imagemin         = require('imagemin');
-// const imageminJpegtran = require('imagemin-jpegtran');
-// const imageminPngquant = require('imagemin-pngquant');
+const imagemin               = require('imagemin');
+const imageminJpegtran       = require('imagemin-jpegtran');
+const imageminJpegRecompress = require('imagemin-jpeg-recompress');
+
+const imageminPngquant = require('imagemin-pngquant');
 const fs               = require('fs');
 const gulp             = require('gulp');
 const gulpAutoPreFixer = require('gulp-autoprefixer');
@@ -42,10 +44,17 @@ const isDirSync = function (aPath) {
  *    command:    gulp create:init --project=<projectname>
  *    result:
  *
- *   |-projectname
- *   |---style
- *   |-----scss
+ *   |-projectname/
+ *   |---res/
+ *   |-----img/
+ *   |-------author.png
+ *   |---shared/
+ *   |-----style/
  *   |-------site.scss
+ *   |-------variable.scss
+ *   |-----js/
+ *   |-------utils.js
+ *   |---view/
  *
  * @param {string} projectName
  * @return {*}
@@ -63,12 +72,10 @@ exports.create_init = function (projectName) {
 	if (isDirSync(projectPath)) {
 		throw new Error('project is exists');
 	} else {
-		gulp.src('./template/style/**/*')
-			.pipe(gulp.dest(projectPath.concat('style')));
-
-		gulp.src('./template/res/**/*')
-			.pipe(gulp.dest(projectPath.concat('res')));
+		return gulp.src(['./template/**/*', '!./template/view/**/*'])
+			.pipe(gulp.dest(projectPath));
 	}
+
 };
 
 /**
@@ -77,11 +84,12 @@ exports.create_init = function (projectName) {
  *    command:    gulp create:view --project=<projectname> --name=<viewname>
  *    result:
  *
- *    |-projectname
- *    |---viewname
- *    |-----viewname.app.html
- *    |-----viewname.app.js
- *    |-----viewname.app.scss
+ *    |-projectname/
+ *    |---view/
+ *    |-----viewname/
+ *    |-------viewname.app.html
+ *    |-------viewname.app.js
+ *    |-------viewname.app.scss
  *
  * @param {string} projectName
  * @param {string} viewName
@@ -240,13 +248,10 @@ exports.img = function (projectName, singleFile) {
 		'#project#',
 		projectName
 		),
-		devPath = srcPath.replace('./src', './dest/dev').replace(
-			'/style/',
-			'/res/'
-		);
+		devPath = srcPath.replace('./src', './dest/dev');
 	// 若是单个文件，则src改成单文件路径
 	srcPath     = singleFile || srcPath.concat('**/*');
-
+	// 不压缩
 	return gulp.src(srcPath)
 		.pipe(gulp.dest(devPath));
 };
@@ -276,14 +281,17 @@ exports.img_release = function (projectName, singleFile) {
 	// 若是单个文件，则src改成单文件路径
 	srcPath         = singleFile || srcPath.concat('**/*');
 
-	return gulp.src(srcPath)
-	// .pipe(imagemin({
-	// 	plugins: [
-	// 		imageminJpegtran(),
-	// 		imageminPngquant({quality: '65-80'})
-	// 	]
-	// }))
+	// 当图片有.large.则不进行压缩
+	gulp.src(srcPath.concat('.large.*'))
 		.pipe(gulp.dest(releasePath));
+	// 只对没有.large.的文件进行压缩
+	return imagemin([srcPath, '!'.concat(srcPath).concat('.large.*')], releasePath, {
+		plugins: [
+			imageminJpegtran(),
+			imageminJpegRecompress(),
+			imageminPngquant({quality: '65-80'})
+		]
+	});
 };
 
 /**
@@ -409,14 +417,14 @@ exports.scss_shared = function (projectName, singleFile) {
 	let srcPath   = './src/#project#/shared/style/'.replace('#project#', projectName);
 	const devPath = srcPath.replace('./src', './dest/dev');
 	// 若是单个文件，则src改成单文件路径
-	srcPath       = singleFile || srcPath.concat('**/*.scss');
+	srcPath       = singleFile || srcPath.concat('**/*.app.scss');
 
 	return gulp.src(srcPath)
 		.pipe(plumber())
 		.pipe(scss({outputStyle: 'compressed'}))
 		.pipe(gulpAutoPreFixer())
 		.pipe(rename(function (path) {
-			// path.basename = path.basename.replace('.app', '');
+			path.basename = path.basename.replace('.app', '');
 			// path.dirname  = path.basename;
 		}))
 		.pipe(gulp.dest(devPath));
@@ -488,14 +496,14 @@ exports.scss_shared_release = function (projectName, singleFile) {
 	var srcPath     = './src/#project#/shared/style/'.replace('#project#', projectName),
 		releasePath = srcPath.replace('./src', './dest/release');
 	// 若是单个文件，则src改成单文件路径
-	srcPath         = singleFile || srcPath.concat('**/*.scss');
+	srcPath         = singleFile || srcPath.concat('**/*.app.scss');
 
 	return gulp.src(srcPath)
 		.pipe(plumber())
 		.pipe(scss({outputStyle: 'compressed'}))
 		.pipe(gulpAutoPreFixer())
 		.pipe(rename(function (path) {
-			// path.basename = path.basename.replace('.app', '');
+			path.basename = path.basename.replace('.app', '');
 			// path.dirname  = path.basename;
 		}))
 		.pipe(gulpCleanCSS({compatibility: 'ie8'}))
@@ -529,7 +537,7 @@ exports.webpack = function (projectName, singleFile) {
 		.pipe(named())
 		// @see https://webpack.js.org/configuration/
 		.pipe(webpack({
-			mode        : 'none',
+			mode        : 'development',
 			module      : {
 				rules: [
 					{
@@ -586,8 +594,8 @@ exports.webpack_release = function (projectName, singleFile) {
 	return gulp.src(srcPath)
 		.pipe(named())
 		.pipe(webpack({
-			mode        : 'production',
-			module      : {
+			mode  : 'production',
+			module: {
 				rules: [
 					{
 						test   : [/\.jsx?$/, /\.js?$/],
@@ -598,11 +606,6 @@ exports.webpack_release = function (projectName, singleFile) {
 							presets: ['@babel/env']
 						}
 					}
-				]
-			},
-			optimization: {
-				minimizer: [
-					new UglifyJsPlugin()
 				]
 			}
 		}))
@@ -636,12 +639,7 @@ exports.webpack_shared = function (projectName, singleFile) {
 		.pipe(named())
 		// @see https://webpack.js.org/configuration/
 		.pipe(webpack({
-			mode        : 'development',
-			optimization: {
-				minimizer: [
-					new UglifyJsPlugin()
-				]
-			}
+			mode: 'development'
 		}))
 		.pipe(gulp.dest(devPath));
 };
@@ -668,12 +666,7 @@ exports.webpack_shared_release = function (projectName, singleFile) {
 	return gulp.src(srcPath)
 		.pipe(named())
 		.pipe(webpack({
-			mode        : 'production',
-			optimization: {
-				minimizer: [
-					new UglifyJsPlugin()
-				]
-			}
+			mode: 'production'
 		}))
 		.pipe(gulp.dest(releasePath));
 };

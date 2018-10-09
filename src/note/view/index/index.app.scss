@@ -1,7 +1,7 @@
-@import "../../shared/style/site";
+@import "../../shared/style/variable";
 
 button {
-	padding : 10px;
+	padding :  map_get($fontSize,10);
 }
 
 .view-content {

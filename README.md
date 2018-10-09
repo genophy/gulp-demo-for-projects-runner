@@ -48,3 +48,13 @@ gulp zip --project=note
 gulp zip:release --project=note
 ```
 
+## 代码注意
+##### 页面视图(view/xxx/xxx)
+- 只对包含【.app.】的文件进行处理，并且会删除【.app】
+
+##### 样式(shared/style)
+- 只对包含【.app.scss】的样式进行输出，并且会删除【.app】
+
+##### 图片 (res/img/)
+- 默认dev模式都不对图片进行压缩
+- release模式下,当图片名包含【.large.】的时候，不进行压缩
