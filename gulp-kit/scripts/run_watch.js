@@ -1,5 +1,4 @@
 const gulp      = require('gulp'),
-	  watchGulp = require('gulp-watch'),
 	  Config    = require('./utils/config'),
 	  Script    = require('./utils/script');
 
@@ -18,9 +17,9 @@ gulp.task('watch', function () {
 				projectName
 				  ),
 				  resPath     = srcPath.replace('/view/', '/res/'),
-				  stylePath   = srcPath.replace('/view/', '/style/'),
-				  cmptPath    = './module/cmpt/',
-				  cmpt3rdPath = './module/cmpt3rd/',
+				  stylePath   = srcPath.replace('/view/', '/shared/style/'),
+				  cmptPath    = './public/cmpt/',
+				  cmpt3rdPath = './public/cmpt3rd/',
 				  currentDir  = process.cwd();
 			// src - html
 			gulp.watch([srcPath.concat('**/*.app.html')])
@@ -79,10 +78,11 @@ gulp.task('watch', function () {
 					Script.scss(projectName, singleFile);
 				});
 
-			// cmpt - scss
+
+			// shared and cmpt - scss
 			gulp.watch([
 				stylePath.concat('**/*.scss'),
-				cmptPath.concat('**/*.scss')], gulp.series('scss'));
+				cmptPath.concat('**/*.scss')], gulp.series('scss_shared', 'scss'));
 
 			// cmpt3rd
 			gulp.watch([cmpt3rdPath.concat('**/*')], gulp.series('cmpt3rd'));
@@ -106,9 +106,9 @@ gulp.task('watch:release', function () {
 				projectName
 				  ),
 				  resPath     = srcPath.replace('/view/', '/res/'),
-				  stylePath   = srcPath.replace('/view/', '/style/'),
-				  cmptPath    = './module/cmpt/',
-				  cmpt3rdPath = './module/cmpt3rd/',
+				  stylePath   = srcPath.replace('/view/', '/shared/style/'),
+				  cmptPath    = './public/cmpt/',
+				  cmpt3rdPath = './public/cmpt3rd/',
 				  currentDir  = process.cwd();
 
 			// src - html
@@ -169,10 +169,10 @@ gulp.task('watch:release', function () {
 					Script.scss_release(projectName, singleFile);
 				});
 
-			// cmpt - scss
+			// shared and cmpt - scss
 			gulp.watch([
 				stylePath.concat('**/*.scss'),
-				cmptPath.concat('**/*.scss')], gulp.series('scss:release'));
+				cmptPath.concat('**/*.scss')], gulp.series('scss_shared:release', 'scss:release'));
 
 			// cmpt3rd
 			gulp.watch([cmpt3rdPath.concat('**/*')], gulp.series('cmpt3rd:release'));
