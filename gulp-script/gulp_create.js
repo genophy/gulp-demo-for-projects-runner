@@ -3,7 +3,7 @@ const gulp   = require('gulp'),
 
 /**
  * 初始化项目
- *    command:    gulp create:init --project=<projectname>
+ *    command:    gulp create:project --project=<projectname>
  *    result:
  *
  *   |-projectname
@@ -12,14 +12,14 @@ const gulp   = require('gulp'),
  *   |-------site.scss
  */
 
-gulp.task('create:init', function() {
+gulp.task('create:project', function() {
 	return Script.create_init();
 });
 
 /**
  * 创建项目下的模块
  *
- *    command:    gulp create:view --project=<projectname> --name=<viewname>
+ *    command:    gulp create:view --project=<projectname> --view=<viewname>
  *    result:
  *
  *    |-projectname

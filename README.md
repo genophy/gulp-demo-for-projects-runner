@@ -9,8 +9,8 @@
 ## 用法
 ### 创建项目和视图页面: create project and view
 ```bash
-gulp create:init --project=m_note  # 创建项目
-gulp create:view --project=m_note --name=index # 创建视图页面
+gulp create:project --project=note  # 创建项目
+gulp create:view --project=note --view=index # 创建视图页面
 
 gulp default_start --project=<projectname> # 默认dev模式打包
 gulp watch --project=<projectname> # dev模式监听改变

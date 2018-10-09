@@ -11,8 +11,8 @@ gulp.task('default', () => {
 	console.log('==============  1  ================');
 	console.log('');
 	console.log('======  the  project usage  ======');
-	console.log('|_gulp create:init --project=<projectname>');
-	console.log('|_gulp create:view --project=<projectname> --name=<viewname>');
+	console.log('|_gulp create:project --project=<projectname>');
+	console.log('|_gulp create:view --project=<projectname> --view=<viewname>');
 	console.log('');
 	console.log('');
 	console.log('==============  2  ================');

@@ -41,7 +41,7 @@ const isDirSync = function (aPath) {
 /**
  * 初始化项目
  *
- *    command:    gulp create:init --project=<projectname>
+ *    command:    gulp create:project --project=<projectname>
  *    result:
  *
  *   |-projectname/
@@ -81,7 +81,7 @@ exports.create_init = function (projectName) {
 /**
  * 创建项目下的模块
  *
- *    command:    gulp create:view --project=<projectname> --name=<viewname>
+ *    command:    gulp create:view --project=<projectname> --view=<viewname>
  *    result:
  *
  *    |-projectname/
@@ -102,7 +102,7 @@ exports.create_view = function (projectName, viewName) {
 	);
 	viewName    = viewName ? viewName : Config.gulpArgumentNameExist(
 		process,
-		'name'
+		'view'
 	);
 	if (!projectName) {
 		throw new Error('create_view no projectname');
@@ -122,7 +122,7 @@ exports.create_view = function (projectName, viewName) {
 	// 若未输入名称，则抛出异常
 	if (!viewName) {
 		throw new Error(
-			'argument <name> is undefined. the usage:  gulp create:view --project=<projectname> --name=<viewname>');
+			'argument <name> is undefined. the usage:  gulp create:view --project=<projectname> --view=<viewname>');
 	}
 
 	return gulp.src('./template/view/template/**/*')
