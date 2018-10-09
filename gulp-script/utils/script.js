@@ -72,7 +72,7 @@ exports.create_init = function (projectName) {
 	if (isDirSync(projectPath)) {
 		throw new Error('project is exists');
 	} else {
-		return gulp.src(['./template/**/*', '!./template/view/**/*'])
+		return gulp.src(['./template/**/*', '!./template/view/**/*'], {allowEmpty: true})
 			.pipe(gulp.dest(projectPath));
 	}
 
@@ -125,7 +125,7 @@ exports.create_view = function (projectName, viewName) {
 			'argument <name> is undefined. the usage:  gulp create:view --project=<projectname> --view=<viewname>');
 	}
 
-	return gulp.src('./template/view/template/**/*')
+	return gulp.src('./template/view/template/**/*', {allowEmpty: true})
 		.pipe(rename(function (path) {
 			path.basename = path.basename.replace('template', viewName);
 		}))
@@ -146,7 +146,7 @@ exports.clean = function (projectName) {
 		throw new Error('clean no projectname');
 	}
 	const devPath = './dest/dev/#project#/'.replace('#project#', projectName);
-	return gulp.src(devPath, {read: false})
+	return gulp.src(devPath, {allowEmpty: true, read: false})
 		.pipe(gulpClean());
 };
 
@@ -163,7 +163,7 @@ exports.clean_release = function (projectName) {
 		throw new Error('clean_release no projectname');
 	}
 	const releasePath = './dest/release/#project#/'.replace('#project#', projectName);
-	return gulp.src(releasePath, {read: false})
+	return gulp.src(releasePath, {allowEmpty: true, read: false})
 		.pipe(gulpClean());
 
 };
@@ -188,7 +188,7 @@ exports.html = function (projectName, singleFile) {
 	// 若是单个文件，则src改成单文件路径
 	srcPath     = singleFile || srcPath.concat('**/*.app.html');
 
-	return gulp.src(srcPath)
+	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(rename(function (path) {
 			path.basename = path.basename.replace('.app', '');
 			path.dirname  = path.basename;
@@ -220,7 +220,7 @@ exports.html_release = function (projectName, singleFile) {
 	// 若是单个文件，则src改成单文件路径
 	srcPath         = singleFile || srcPath.concat('**/*.app.html');
 
-	return gulp.src(srcPath)
+	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(rename(function (path) {
 			path.basename = path.basename.replace('.app', '');
 			path.dirname  = path.basename;
@@ -252,7 +252,7 @@ exports.img = function (projectName, singleFile) {
 	// 若是单个文件，则src改成单文件路径
 	srcPath     = singleFile || srcPath.concat('**/*');
 	// 不压缩
-	return gulp.src(srcPath)
+	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(gulp.dest(devPath));
 };
 
@@ -282,7 +282,7 @@ exports.img_release = function (projectName, singleFile) {
 	srcPath         = singleFile || srcPath.concat('**/*');
 
 	// 当图片有.large.则不进行压缩
-	gulp.src(srcPath.concat('.large.*'))
+	gulp.src(srcPath.concat('.large.*'), {allowEmpty: true})
 		.pipe(gulp.dest(releasePath));
 	// 只对没有.large.的文件进行压缩
 	return imagemin([srcPath, '!'.concat(srcPath).concat('.large.*')], releasePath, {
@@ -376,7 +376,7 @@ exports.scss = function (projectName, singleFile) {
 	// 若是单个文件，则src改成单文件路径
 	srcPath     = singleFile || srcPath.concat('**/*.app.scss');
 
-	return gulp.src(srcPath)
+	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(plumber())
 		.pipe(scss())
 		.pipe(gulpAutoPreFixer())
@@ -414,7 +414,7 @@ exports.scss_shared = function (projectName, singleFile) {
 	// 若是单个文件，则src改成单文件路径
 	srcPath       = singleFile || srcPath.concat('**/*.app.scss');
 
-	return gulp.src(srcPath)
+	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(plumber())
 		.pipe(scss({outputStyle: 'compressed'}))
 		.pipe(gulpAutoPreFixer())
@@ -454,7 +454,7 @@ exports.scss_release = function (projectName, singleFile) {
 	// 若是单个文件，则src改成单文件路径
 	srcPath         = singleFile || srcPath.concat('**/*.app.scss');
 
-	return gulp.src(srcPath)
+	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(plumber())
 		.pipe(scss())
 		.pipe(gulpAutoPreFixer())
@@ -493,7 +493,7 @@ exports.scss_shared_release = function (projectName, singleFile) {
 	// 若是单个文件，则src改成单文件路径
 	srcPath         = singleFile || srcPath.concat('**/*.app.scss');
 
-	return gulp.src(srcPath)
+	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(plumber())
 		.pipe(scss({outputStyle: 'compressed'}))
 		.pipe(gulpAutoPreFixer())
@@ -528,7 +528,7 @@ exports.webpack = function (projectName, singleFile) {
 	// 若是单个文件，则src改成单文件路径
 	srcPath     = singleFile || srcPath.concat('**/*.app.js');
 
-	return gulp.src(srcPath)
+	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(named())
 		// @see https://webpack.js.org/configuration/
 		.pipe(webpack({
@@ -586,7 +586,7 @@ exports.webpack_release = function (projectName, singleFile) {
 	// 若是单个文件，则src改成单文件路径
 	srcPath         = singleFile || srcPath.concat('**/*.app.js');
 
-	return gulp.src(srcPath)
+	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(named())
 		.pipe(webpack({
 			mode  : 'production',
@@ -630,7 +630,7 @@ exports.webpack_shared = function (projectName, singleFile) {
 	// 若是单个文件，则src改成单文件路径
 	srcPath     = singleFile || srcPath.concat('**/*.js');
 
-	return gulp.src(srcPath)
+	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(named())
 		// @see https://webpack.js.org/configuration/
 		.pipe(webpack({
@@ -658,7 +658,7 @@ exports.webpack_shared_release = function (projectName, singleFile) {
 	// 若是单个文件，则src改成单文件路径
 	srcPath         = singleFile || srcPath.concat('**/*.js');
 
-	return gulp.src(srcPath)
+	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(named())
 		.pipe(webpack({
 			mode: 'production'
@@ -685,7 +685,7 @@ exports.cmpt3rd = function (projectName) {
 			'#project#',
 			projectName
 		);
-	return gulp.src(srcPath)
+	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(gulp.dest(devPath));
 };
 
@@ -707,6 +707,6 @@ exports.cmpt3rd_release = function (projectName) {
 			'#project#',
 			projectName
 		);
-	return gulp.src(srcPath)
+	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(gulp.dest(releasePath));
 };
