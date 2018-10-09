@@ -1,4 +1,4 @@
-# gulp-demo-for-project-runner
+# gulp-demo-for-projects-runner
 >gulp练习，用于项目运行
 - gulp@4.0.0
 - js项目发布方式，支持es6+。
