@@ -388,42 +388,6 @@ exports.scss = function (projectName, singleFile) {
 };
 
 
-/**
- * 脚本编译
- *
- * 将 *.app.scss 编译成为同目录下的*.app.css
- *
- * 优先级 (最大级若存在且不为空文件，则只编译最大级别到 *.app.css。若*.app.js以上级别的文件都为空文件，则不进行编译 )
- *
- *
- * *.app.css <_ *.app.scss
- * @param {string} projectName
- * @param {string} singleFile
- * @return {*}
- */
-exports.scss_shared = function (projectName, singleFile) {
-	projectName = projectName ||
-		Config.gulpArgumentNameExist(process, 'project');
-	singleFile  = singleFile ||
-		Config.gulpArgumentNameExist(process, 'singlefile');
-	if (!projectName) {
-		throw new Error('scss_shared no projectname');
-	}
-	let srcPath   = './src/#project#/shared/style/'.replace('#project#', projectName);
-	const devPath = srcPath.replace('./src', './dest/dev');
-	// 若是单个文件，则src改成单文件路径
-	srcPath       = singleFile || srcPath.concat('**/*.app.scss');
-
-	return gulp.src(srcPath, {allowEmpty: true})
-		.pipe(plumber())
-		.pipe(scss({outputStyle: 'compressed'}))
-		.pipe(gulpAutoPreFixer())
-		.pipe(rename(function (path) {
-			path.basename = path.basename.replace('.app', '');
-			// path.dirname  = path.basename;
-		}))
-		.pipe(gulp.dest(devPath));
-};
 
 /**
  * 脚本编译 (release)
@@ -466,6 +430,42 @@ exports.scss_release = function (projectName, singleFile) {
 		.pipe(gulp.dest(releasePath));
 };
 
+/**
+ * 脚本编译
+ *
+ * 将 *.scss 编译成为同目录下的*.css
+ *
+ * 优先级 (最大级若存在且不为空文件，则只编译最大级别到 *.app.css。若*.app.js以上级别的文件都为空文件，则不进行编译 )
+ *
+ *
+ * *.app.css <_ *.app.scss
+ * @param {string} projectName
+ * @param {string} singleFile
+ * @return {*}
+ */
+exports.scss_shared = function (projectName, singleFile) {
+	projectName = projectName ||
+		Config.gulpArgumentNameExist(process, 'project');
+	singleFile  = singleFile ||
+		Config.gulpArgumentNameExist(process, 'singlefile');
+	if (!projectName) {
+		throw new Error('scss_shared no projectname');
+	}
+	let srcPath   = './src/#project#/shared/style/'.replace('#project#', projectName);
+	const devPath = srcPath.replace('./src', './dest/dev');
+	// 若是单个文件，则src改成单文件路径
+	srcPath       = singleFile || srcPath.concat('**/*.app.scss');
+
+	return gulp.src(srcPath, {allowEmpty: true})
+		.pipe(plumber())
+		.pipe(scss())
+		.pipe(gulpAutoPreFixer())
+		.pipe(rename(function (path) {
+			path.basename = path.basename.replace('.app', '');
+			// path.dirname  = path.basename;
+		}))
+		.pipe(gulp.dest(devPath));
+};
 
 /**
  * 脚本编译 (release)
