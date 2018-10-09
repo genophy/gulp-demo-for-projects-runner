@@ -1,22 +1,21 @@
 @import "variable";
 
-html {
-	font-size   : 62.5%; // 10rem === 1rem
-	font-family : "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu;
-}
-
-html, body {
-	height : 100%;
-}
-
-body {
-	min-height : 60rem;
-}
-
+/*
+ * css重置
+ */
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
 	margin    : 0;
 	padding   : 0;
-	font-size : map_get($fontSize, 14);
+	font-size : 14px;
+}
+
+body, button, input, select, textarea {
+	font-size   : 12px;
+	font-family : Tahoma, arial;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-size : 100%;
 }
 
 address, cite, dfn, em, var {
@@ -28,7 +27,7 @@ code, kbd, pre, samp {
 }
 
 small {
-	font-size : map_get($fontSize, 12);
+	font-size : 12px;
 }
 
 ul, ol {
@@ -59,7 +58,10 @@ fieldset, img {
 	border : 0;
 }
 
-/* --- 自定义样式 --- */
+button, input, select, textarea {
+	font-size : 100%;
+}
+
 @function named($key,$prefix :'',$stuff:'') {
 	@return $prefix + "["+ $key+"]" + $stuff + ", " + $prefix+"." + $key + $stuff;
 }
@@ -216,14 +218,14 @@ fieldset, img {
 #{named(cursor-pointer-text)} {
 	&.mat-icon-button {
 		height      : auto;
-		line-height : map_get($fontSize, 14);
-		font-size   : map_get($fontSize, 12);
+		line-height : 15px;
+		font-size   : 12px;
 	}
 }
 
 /*loop:spaceSize*/
 @each $sizeK, $sizeV in $spaceSize {
-	// m-a-normal => margin:1.5rem;
+	// m-a-normal => margin:15px;
 	@each $typeK, $typeV in $spaceType {
 		#{named(#{$typeK}-#{$sizeK})} {
 			#{$typeV}: $sizeV;
@@ -253,38 +255,38 @@ fieldset, img {
 
 /*loop:layout size*/
 @for $n from 1 through 10 {
-	// w-5 ==> width:0.5rem; ...w-50 ,step 5
+	// w-5 ==> width:5px; ...w-50 ,step 5
 	@each $layoutK, $layoutV in $layoutType {
 		#{named(#{$layoutK}-#{$n*5})} {
-			#{$layoutV}: $n*0.5rem;
+			#{$layoutV}: $n*5px;
 		}
 	}
 
-	// w-60 => width:5.0rem; ...w-150 , step 10
+	// w-60 => width:50px; ...w-150 , step 10
 	@each $layoutK, $layoutV in $layoutType {
 		#{named(#{$layoutK}-#{$n*10 + 50})} {
-			#{$layoutV}: $n*1.0rem + 5.0rem;
+			#{$layoutV}: $n*10px + 50px;
 		}
 	}
 
-	// w-160 => width:15.0rem; ...w-250 , step 10
+	// w-160 => width:150px; ...w-250 , step 10
 	@each $layoutK, $layoutV in $layoutType {
 		#{named(#{$layoutK}-#{$n*10 + 150})} {
-			#{$layoutV}: $n*1.0rem + 15.0rem;
+			#{$layoutV}: $n*10px + 150px;
 		}
 	}
 
-	// w-300 => width:30.0rem; ...w-750 , step 50
+	// w-300 => width:300px; ...w-750 , step 50
 	@each $layoutK, $layoutV in $layoutType {
 		#{named(#{$layoutK}-#{($n*50)+250})} {
-			#{$layoutV}: ($n*5.0rem) + 25.0rem;
+			#{$layoutV}: ($n*50px) + 250px;
 		}
 	}
 
-	// w-800 => width:80.0rem; ...w-1700 , step 100
+	// w-800 => width:800px; ...w-1700 , step 100
 	@each $layoutK, $layoutV in $layoutType {
 		#{named(#{$layoutK}-#{($n*100)+700})} {
-			#{$layoutV}: ($n*10.0rem) + 70.0rem;
+			#{$layoutV}: ($n*100px) + 700px;
 		}
 	}
 
@@ -331,9 +333,9 @@ fieldset, img {
 		flex-basis : $n*10%;
 	}
 
-	// flex-basis-20 => flex-basis:2.0rem;
+	// flex-basis-20 => flex-basis:20px;
 	#{named(flex-basis-#{$n*20})} {
-		flex-basis : $n*2.0rem;
+		flex-basis : $n*20px;
 	}
 
 }
@@ -402,10 +404,6 @@ fieldset, img {
 
 #{named(overflow)} {
 	overflow : auto;
-}
-
-#{named(overflow-none)} {
-	overflow : hidden;
 }
 
 #{named(overflow-scroll)} {

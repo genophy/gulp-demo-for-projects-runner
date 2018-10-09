@@ -20,6 +20,7 @@ const webpack          = require('webpack-stream');
 
 const Config = require('./config');
 
+
 /**
  *  是否已经存在该文件夹
  * @param {string} aPath
@@ -117,7 +118,7 @@ exports.create_view = function (projectName, viewName) {
 		  );
 
 	if (!isDirSync(projectPath)) {
-		throw new Error('project is not exists');
+		throw new Error(`project ${projectName} is not exists`);
 	}
 	// 若未输入名称，则抛出异常
 	if (!viewName) {
@@ -386,7 +387,6 @@ exports.scss = function (projectName, singleFile) {
 		}))
 		.pipe(gulp.dest(devPath));
 };
-
 
 
 /**
