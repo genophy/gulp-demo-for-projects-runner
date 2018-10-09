@@ -36,7 +36,6 @@ gulp.task('watch', function () {
 			// src - js
 			gulp.watch([srcPath.concat('**/*.app.js')])
 				.on('change', function (file) {
-					console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  ', file, currentDir);
 					const singleFile = file.replace(
 						currentDir,
 						''

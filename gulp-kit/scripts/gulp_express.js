@@ -2,7 +2,7 @@ const gulp    = require('gulp'),
 	express = require('express'),
 	http    = require('http'),
 	https   = require('https'),
-	ssl     = require('./ssl/sslLicense'),
+	ssl     = require('../ssl/sslLicense'),
 	Config  = require('./utils/config');
 
 const router = express.Router();

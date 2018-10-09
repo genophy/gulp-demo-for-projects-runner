@@ -1,7 +1,6 @@
 const gulp   = require('gulp'),
 	  zip    = require('gulp-zip'),
-	  Config = require('./utils/config'),
-	  Script = require('./utils/script');
+	  Config = require('./utils/config');
 /**
  * 打包dev目录
  */
@@ -33,7 +32,6 @@ gulp.task('zip:release', gulp.series('default_start:release', () => {
 		'zip',
 		'project',
 		function (argv) {
-			console.log('>>>>>>>>>>>>>>>>>>>>> ', argv);
 			const releasePath = './dest/release/#project#/**/*'.replace(
 				'#project#',
 				argv

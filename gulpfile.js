@@ -1,16 +1,16 @@
 const recursiveReadSync = require('recursive-readdir-sync');
 try {
-	const files        = recursiveReadSync('./gulp-kit'); // 同步递归遍历目录
+	const files        = recursiveReadSync('./gulp-kit/scripts'); // 同步递归遍历目录
 	const gulpForAlias = []; // 用于gulp别名引用的文件
 	const gulpForRun   = []; // 用于gulp直接运行的文件
 	if (files instanceof Array) {
 		for (let fileName of  files) {
 			// 若是gulp普通脚本
-			if (fileName.startsWith('gulp-kit/gulp_')) {
+			if (fileName.startsWith('gulp-kit/scripts/gulp_')) {
 				gulpForAlias.push('./'.concat(fileName));
 			}
 			// 若是gulp运行脚本
-			if (fileName.startsWith('gulp-kit/run_')) {
+			if (fileName.startsWith('gulp-kit/scripts/run_')) {
 				gulpForRun.push('./'.concat(fileName));
 			}
 		}
