@@ -1,8 +1,8 @@
 const fs = require('fs');
 // ssl license
 
-const keyPath  = './server/ssl/mkey.pem',
-	certPath = './server/ssl/mcert.pem';
+const keyPath  = './gulp-kit/ssl/mkey.pem',
+	certPath = './gulp-kit/ssl/mcert.pem';
 
 const hskey = fs.readFileSync(keyPath);
 const hscert = fs.readFileSync(certPath);

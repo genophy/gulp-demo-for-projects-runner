@@ -72,7 +72,7 @@ exports.create_init = function (projectName) {
 	if (isDirSync(projectPath)) {
 		throw new Error('project is exists');
 	} else {
-		return gulp.src(['./template/**/*', '!./template/view/**/*'], {allowEmpty: true})
+		return gulp.src(['./gulp-kit/template/**/*', '!./gulp-kit/template/view/**/*'], {allowEmpty: true})
 			.pipe(gulp.dest(projectPath));
 	}
 
@@ -125,7 +125,7 @@ exports.create_view = function (projectName, viewName) {
 			'argument <name> is undefined. the usage:  gulp create:view --project=<projectname> --view=<viewname>');
 	}
 
-	return gulp.src('./template/view/template/**/*', {allowEmpty: true})
+	return gulp.src('./gulp-kit/template/view/template/**/*', {allowEmpty: true})
 		.pipe(rename(function (path) {
 			path.basename = path.basename.replace('template', viewName);
 		}))
