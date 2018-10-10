@@ -12,6 +12,7 @@
 ```text
 gulp generate:project --project=note  # 创建项目 # gulp gp --project=note
 gulp generate:view --project=note --view=index # 创建视图页面 # gulp gv --project=note --view=index
+# 直接用命令行 bin/generate.sh 也可
 
 gulp default_start --project=<projectname> # 默认dev模式打包
 gulp watch --project=<projectname> # dev模式监听改变
@@ -30,17 +31,17 @@ gulp serve:release --project=<projectname> # release模式启动服务
 ### 命令行运行:开发模式: for dev
 
 ```bash
-os-shell/dev_run.bat # (windows)
-os-shell/dev_run.sh  # (linux)
-os-shell/dev_run_ios.sh # (mac)
+bin/dev_run.bat # (windows)
+bin/dev_run.sh  # (linux)
+bin/dev_run_ios.sh # (mac)
 ```
 
 ### 命令行运行:发布模式: for release( the compress dev which also for prod)
 
 ```bash
-os-shell/release_run.bat # (windows)
-os-shell/release_run.sh  # (linux)
-os-shell/release_run_ios.sh # (mac)
+bin/release_run.bat # (windows)
+bin/release_run.sh  # (linux)
+bin/release_run_ios.sh # (mac)
 ```
 
 ### 打包zip
