@@ -11,7 +11,7 @@ const gulp   = require('gulp'),
  *
  * *.app.css <_ *.app.scss
  */
-gulp.task('scss', function () {
+gulp.task('scss', () => {
 	return Script.scss();
 });
 
@@ -25,7 +25,7 @@ gulp.task('scss', function () {
  *
  * *.app.css <_ *.app.scss
  */
-gulp.task('scss:release', function () {
+gulp.task('scss:release', () => {
 	return Script.scss_release();
 });
 
@@ -39,7 +39,7 @@ gulp.task('scss:release', function () {
  *
  * *.app.css <_ *.app.scss
  */
-gulp.task('scss_shared', function () {
+gulp.task('scss_shared', () => {
 	return Script.scss_shared();
 });
 
@@ -53,6 +53,6 @@ gulp.task('scss_shared', function () {
  *
  * *.app.css <_ *.app.scss
  */
-gulp.task('scss_shared:release', function () {
+gulp.task('scss_shared:release', () => {
 	return Script.scss_shared_release();
 });

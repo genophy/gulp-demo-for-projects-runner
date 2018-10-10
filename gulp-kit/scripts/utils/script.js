@@ -26,7 +26,7 @@ const Config = require('./config');
  * @param {string} aPath
  * @return {*}
  */
-const isDirSync = function (aPath) {
+const isDirSync = (aPath) => {
 	try {
 		return fs.statSync(aPath).isDirectory();
 	} catch (e) {
@@ -61,7 +61,7 @@ const isDirSync = function (aPath) {
  * @return {*}
  */
 
-exports.create_init = function (projectName) {
+exports.create_init = (projectName) => {
 	projectName = projectName ? projectName : Config.gulpArgumentNameExist(
 		process,
 		'project'
@@ -96,7 +96,7 @@ exports.create_init = function (projectName) {
  * @param {string} viewName
  * @return {*}
  */
-exports.create_view = function (projectName, viewName) {
+exports.create_view = (projectName, viewName) => {
 	projectName = projectName ? projectName : Config.gulpArgumentNameExist(
 		process,
 		'project'
@@ -108,6 +108,7 @@ exports.create_view = function (projectName, viewName) {
 	if (!projectName) {
 		throw new Error('create_view no projectname');
 	}
+
 	const projectPath     = './src/#project#/'.replace(
 		'#project#',
 		projectName
@@ -127,7 +128,7 @@ exports.create_view = function (projectName, viewName) {
 	}
 
 	return gulp.src('./gulp-kit/template/view/template/**/*', {allowEmpty: true})
-		.pipe(rename(function (path) {
+		.pipe(rename(path => {
 			path.basename = path.basename.replace('template', viewName);
 		}))
 		.pipe(replace('template', viewName))
@@ -140,7 +141,7 @@ exports.create_view = function (projectName, viewName) {
  * @param {string} projectName
  * @return {*}
  */
-exports.clean = function (projectName) {
+exports.clean = (projectName) => {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	if (!projectName) {
@@ -157,7 +158,7 @@ exports.clean = function (projectName) {
  * @param {string} projectName
  * @return {*}
  */
-exports.clean_release = function (projectName) {
+exports.clean_release = (projectName) => {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	if (!projectName) {
@@ -176,7 +177,7 @@ exports.clean_release = function (projectName) {
  * @param {string} singleFile
  * @return {*}
  */
-exports.html = function (projectName, singleFile) {
+exports.html = (projectName, singleFile) => {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	singleFile  = singleFile ||
@@ -190,7 +191,7 @@ exports.html = function (projectName, singleFile) {
 	srcPath     = singleFile || srcPath.concat('**/*.app.html');
 
 	return gulp.src(srcPath, {allowEmpty: true})
-		.pipe(rename(function (path) {
+		.pipe(rename(path => {
 			path.basename = path.basename.replace('.app', '');
 			path.dirname  = path.basename;
 		}))
@@ -205,7 +206,7 @@ exports.html = function (projectName, singleFile) {
  * @param {string} singleFile
  * @return {*}
  */
-exports.html_release = function (projectName, singleFile) {
+exports.html_release = (projectName, singleFile) => {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	singleFile  = singleFile ||
@@ -222,7 +223,7 @@ exports.html_release = function (projectName, singleFile) {
 	srcPath         = singleFile || srcPath.concat('**/*.app.html');
 
 	return gulp.src(srcPath, {allowEmpty: true})
-		.pipe(rename(function (path) {
+		.pipe(rename(path => {
 			path.basename = path.basename.replace('.app', '');
 			path.dirname  = path.basename;
 		}))
@@ -237,7 +238,7 @@ exports.html_release = function (projectName, singleFile) {
  * @param {string} singleFile
  * @return {*}
  */
-exports.img = function (projectName, singleFile) {
+exports.img = (projectName, singleFile) => {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	singleFile  = singleFile ||
@@ -263,7 +264,7 @@ exports.img = function (projectName, singleFile) {
  * @param {string} singleFile
  * @return {*}
  */
-exports.img_release = function (projectName, singleFile) {
+exports.img_release = (projectName, singleFile) => {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	singleFile  = singleFile ||
@@ -301,7 +302,7 @@ exports.img_release = function (projectName, singleFile) {
  * @param {string} singleFile
  * @return {*}
  */
-exports.res = function (projectName, singleFile) {
+exports.res = (projectName, singleFile) => {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	singleFile  = singleFile ||
@@ -327,7 +328,7 @@ exports.res = function (projectName, singleFile) {
  * @param {string} singleFile
  * @return {*}
  */
-exports.res_release = function (projectName, singleFile) {
+exports.res_release = (projectName, singleFile) => {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	singleFile  = singleFile ||
@@ -361,7 +362,7 @@ exports.res_release = function (projectName, singleFile) {
  * @param {string} singleFile
  * @return {*}
  */
-exports.scss = function (projectName, singleFile) {
+exports.scss = (projectName, singleFile) => {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	singleFile  = singleFile ||
@@ -381,7 +382,7 @@ exports.scss = function (projectName, singleFile) {
 		.pipe(plumber())
 		.pipe(scss())
 		.pipe(gulpAutoPreFixer())
-		.pipe(rename(function (path) {
+		.pipe(rename(path => {
 			path.basename = path.basename.replace('.app', '');
 			path.dirname  = path.basename;
 		}))
@@ -402,7 +403,7 @@ exports.scss = function (projectName, singleFile) {
  * @param {string} singleFile
  * @return {*}
  */
-exports.scss_release = function (projectName, singleFile) {
+exports.scss_release = (projectName, singleFile) => {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	singleFile  = singleFile ||
@@ -422,7 +423,7 @@ exports.scss_release = function (projectName, singleFile) {
 		.pipe(plumber())
 		.pipe(scss())
 		.pipe(gulpAutoPreFixer())
-		.pipe(rename(function (path) {
+		.pipe(rename(path => {
 			path.basename = path.basename.replace('.app', '');
 			path.dirname  = path.basename;
 		}))
@@ -443,7 +444,7 @@ exports.scss_release = function (projectName, singleFile) {
  * @param {string} singleFile
  * @return {*}
  */
-exports.scss_shared = function (projectName, singleFile) {
+exports.scss_shared = (projectName, singleFile) => {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	singleFile  = singleFile ||
@@ -460,7 +461,7 @@ exports.scss_shared = function (projectName, singleFile) {
 		.pipe(plumber())
 		.pipe(scss())
 		.pipe(gulpAutoPreFixer())
-		.pipe(rename(function (path) {
+		.pipe(rename(path => {
 			path.basename = path.basename.replace('.app', '');
 			// path.dirname  = path.basename;
 		}))
@@ -480,7 +481,7 @@ exports.scss_shared = function (projectName, singleFile) {
  * @param {string} singleFile
  * @return {*}
  */
-exports.scss_shared_release = function (projectName, singleFile) {
+exports.scss_shared_release = (projectName, singleFile) => {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	singleFile  = singleFile ||
@@ -497,7 +498,7 @@ exports.scss_shared_release = function (projectName, singleFile) {
 		.pipe(plumber())
 		.pipe(scss({outputStyle: 'compressed'}))
 		.pipe(gulpAutoPreFixer())
-		.pipe(rename(function (path) {
+		.pipe(rename(path => {
 			path.basename = path.basename.replace('.app', '');
 			// path.dirname  = path.basename;
 		}))
@@ -512,7 +513,7 @@ exports.scss_shared_release = function (projectName, singleFile) {
  * @param {string} singleFile
  * @return {*}
  */
-exports.webpack = function (projectName, singleFile) {
+exports.webpack = (projectName, singleFile) => {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	singleFile  = singleFile ||
@@ -552,7 +553,7 @@ exports.webpack = function (projectName, singleFile) {
 				]
 			}
 		}))
-		.pipe(rename(function (path) {
+		.pipe(rename(path => {
 			path.basename = path.basename.replace('.app', '');
 			path.dirname  = path.basename;
 		}))
@@ -567,7 +568,7 @@ exports.webpack = function (projectName, singleFile) {
  * @param {string} singleFile
  * @return {*}
  */
-exports.webpack_release = function (projectName, singleFile) {
+exports.webpack_release = (projectName, singleFile) => {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	singleFile  = singleFile ||
@@ -604,7 +605,7 @@ exports.webpack_release = function (projectName, singleFile) {
 				]
 			}
 		}))
-		.pipe(rename(function (path) {
+		.pipe(rename(path => {
 			path.basename = path.basename.replace('.app', '');
 			path.dirname  = path.basename;
 		}))
@@ -617,7 +618,7 @@ exports.webpack_release = function (projectName, singleFile) {
  * @param {string} singleFile
  * @return {*}
  */
-exports.webpack_shared = function (projectName, singleFile) {
+exports.webpack_shared = (projectName, singleFile) => {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	singleFile  = singleFile ||
@@ -645,7 +646,7 @@ exports.webpack_shared = function (projectName, singleFile) {
  * @param {string} singleFile
  * @return {*}
  */
-exports.webpack_shared_release = function (projectName, singleFile) {
+exports.webpack_shared_release = (projectName, singleFile) => {
 	projectName = projectName ||
 		Config.gulpArgumentNameExist(process, 'project');
 	singleFile  = singleFile ||
@@ -672,7 +673,7 @@ exports.webpack_shared_release = function (projectName, singleFile) {
  * @param {string} projectName
  * @return {*}
  */
-exports.cmpt3rd = function (projectName) {
+exports.cmpt3rd = (projectName) => {
 	projectName = projectName ? projectName : Config.gulpArgumentNameExist(
 		process,
 		'project'
@@ -694,7 +695,7 @@ exports.cmpt3rd = function (projectName) {
  * @param {string} projectName
  * @return {*}
  */
-exports.cmpt3rd_release = function (projectName) {
+exports.cmpt3rd_release = (projectName) => {
 	projectName = projectName ? projectName : Config.gulpArgumentNameExist(
 		process,
 		'project'

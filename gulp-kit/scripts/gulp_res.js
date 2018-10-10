@@ -5,7 +5,7 @@ const gulp   = require('gulp'),
  * 图片复制
  *
  */
-gulp.task('res', function () {
+gulp.task('res', () => {
 	return Script.res();
 });
 
@@ -13,6 +13,6 @@ gulp.task('res', function () {
  * 图片复制 (release)
  *
  */
-gulp.task('res:release', function () {
+gulp.task('res:release', () => {
 	return Script.res_release();
 });

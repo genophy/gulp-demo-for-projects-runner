@@ -5,13 +5,13 @@ const gulp        = require('gulp'),
 /**
  * 启动服务器
  */
-gulp.task('serve', function () {
+gulp.task('serve',  () => {
 
 	return Config.gulpVerifyArgumentName(
 		process,
 		'serve',
 		'project',
-		function (argv) {
+		 (argv) => {
 			const baseDir = './dest/dev/#project#/'.replace('#project#', argv);
 
 			browserSync.init({
@@ -20,7 +20,7 @@ gulp.task('serve', function () {
 				browser  : 'google chrome', // windows: "chrome.exe"
 				server   : {
 					baseDir   : baseDir,
-					middleware: function (req, res, next) {
+					middleware:  (req, res, next) => {
 						// const reqUrl = req.url;
 						next();
 					}
@@ -34,13 +34,13 @@ gulp.task('serve', function () {
 /**
  * 启动服务器
  */
-gulp.task('serve:release', function () {
+gulp.task('serve:release',  () => {
 
 	return Config.gulpVerifyArgumentName(
 		process,
 		'serve',
 		'project',
-		function (argv) {
+		argv => {
 			const baseDir = './dest/release/#project#/'.replace(
 				'#project#',
 				argv
@@ -52,7 +52,7 @@ gulp.task('serve:release', function () {
 				browser  : 'google chrome', // windows: "chrome.exe"
 				server   : {
 					baseDir   : baseDir,
-					middleware: function (req, res, next) {
+					middleware:  (req, res, next) => {
 						// const reqUrl = req.url;
 						next();
 					}

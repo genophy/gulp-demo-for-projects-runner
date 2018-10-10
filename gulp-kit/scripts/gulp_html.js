@@ -8,7 +8,7 @@ const gulp   = require('gulp'),
  *
  *
  */
-gulp.task('html', function() {
+gulp.task('html', () => {
 	return Script.html();
 });
 
@@ -19,6 +19,6 @@ gulp.task('html', function() {
  *
  *
  */
-gulp.task('html:release', function() {
+gulp.task('html:release', () => {
 	return Script.html_release();
 });

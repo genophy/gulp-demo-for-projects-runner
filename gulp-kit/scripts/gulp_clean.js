@@ -8,7 +8,7 @@ const gulp   = require('gulp'),
  *
  *
  */
-gulp.task('clean', function() {
+gulp.task('clean', () => {
 	return Script.clean();
 });
 
@@ -19,6 +19,6 @@ gulp.task('clean', function() {
  *
  *
  */
-gulp.task('clean:release', function() {
+gulp.task('clean:release', () => {
 	return Script.clean_release();
 });

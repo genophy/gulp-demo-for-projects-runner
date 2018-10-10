@@ -23,9 +23,11 @@ $(function () {
 		a: 'efefefefef',
 		b: '324234'
 	};
-	const {   x,
+	const {
+			  x,
 			  y,
-			  ...z   }     = input;
+			  ...z
+		  }     = input;
 	console.log(x);
 	console.log(y);
 	console.log(z);

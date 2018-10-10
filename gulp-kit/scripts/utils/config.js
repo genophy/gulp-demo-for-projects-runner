@@ -18,12 +18,11 @@ exports.PORT = {
 /*
  * gulp的--<argument>==<v>中的argument是否存在，若存在则返回<v>，否则为null
  */
-exports.gulpArgumentNameExist = function (process, argumentName) {
+exports.gulpArgumentNameExist = (process, argumentName) => {
 	const processArgvs = process.argv.join(' ');
 	const matcherArr   = processArgvs.match(eval('/--' + argumentName + '=\\S*/i'));
 	// 若有值
 	if (matcherArr && matcherArr.length > 0) {
-
 		return matcherArr[0].replace('--'.concat(argumentName).concat('='), '');
 	} else if ('project' === argumentName) { // 若是project
 		console.log(['projectName is empty,u can set it by --proejct=projectName. Now projectName is'.yellow, 'app'.green, 'as default'.yellow].join(' '));

@@ -1,17 +1,17 @@
-const gulp      = require('gulp'),
-	  Config    = require('./utils/config'),
-	  Script    = require('./utils/script');
+const gulp   = require('gulp'),
+	  Config = require('./utils/config'),
+	  Script = require('./utils/script');
 
 /*
  * 监视文件变动
  */
-gulp.task('watch', function () {
+gulp.task('watch', () => {
 
 	return Config.gulpVerifyArgumentName(
 		process,
 		'watch',
 		'project',
-		function (projectName) {
+		projectName => {
 			const srcPath     = './src/#project#/view/'.replace(
 				'#project#',
 				projectName
@@ -23,7 +23,7 @@ gulp.task('watch', function () {
 				  currentDir  = process.cwd();
 			// src - html
 			gulp.watch([srcPath.concat('**/*.app.html')])
-				.on('change', function (file) {
+				.on('change', file => {
 					const singleFile = file.replace(
 						currentDir,
 						''
@@ -34,7 +34,7 @@ gulp.task('watch', function () {
 
 			// src - js
 			gulp.watch([srcPath.concat('**/*.app.js')])
-				.on('change', function (file) {
+				.on('change', file => {
 					const singleFile = file.replace(
 						currentDir,
 						''
@@ -47,7 +47,7 @@ gulp.task('watch', function () {
 
 			// res - img
 			gulp.watch([resPath.concat('img/**/*')])
-				.on('change', function (file) {
+				.on('change', file => {
 					const singleFile = file.replace(
 						currentDir,
 						''
@@ -58,7 +58,7 @@ gulp.task('watch', function () {
 
 			// res - exclude img
 			gulp.watch([resPath.concat('**/*'), '!'.concat(resPath).concat('img/**/*')])
-				.on('change', function (file) {
+				.on('change', file => {
 					const singleFile = file.replace(
 						currentDir,
 						''
@@ -69,7 +69,7 @@ gulp.task('watch', function () {
 
 			// src - scss
 			gulp.watch([srcPath.concat('**/*.app.scss')])
-				.on('change', function (file) {
+				.on('change', file => {
 					var singleFile = file.replace(
 						currentDir,
 						''
@@ -94,13 +94,13 @@ gulp.task('watch', function () {
 /*
  * 监视文件变动(release)
  */
-gulp.task('watch:release', function () {
+gulp.task('watch:release', () => {
 
 	return Config.gulpVerifyArgumentName(
 		process,
 		'watch',
 		'project',
-		function (projectName) {
+		projectName => {
 			const srcPath     = './src/#project#/view/'.replace(
 				'#project#',
 				projectName
@@ -113,7 +113,7 @@ gulp.task('watch:release', function () {
 
 			// src - html
 			gulp.watch([srcPath.concat('**/*.app.html')])
-				.on('change', function (file) {
+				.on('change', file => {
 					const singleFile = file.replace(
 						currentDir,
 						''
@@ -124,7 +124,7 @@ gulp.task('watch:release', function () {
 
 			// src - js
 			gulp.watch([srcPath.concat('**/*.app.js')])
-				.on('change', function (file) {
+				.on('change', file => {
 					const singleFile = file.replace(
 						currentDir,
 						''
@@ -138,7 +138,7 @@ gulp.task('watch:release', function () {
 
 			// res - img
 			gulp.watch([resPath.concat('img/**/*')])
-				.on('change', function (file) {
+				.on('change', file => {
 					const singleFile = file.replace(
 						currentDir,
 						''
@@ -149,7 +149,7 @@ gulp.task('watch:release', function () {
 
 			// res - exclude img
 			gulp.watch([resPath.concat('**/*'), '!'.concat(resPath).concat('img/**/*')])
-				.on('change', function (file) {
+				.on('change', file => {
 					const singleFile = file.replace(
 						currentDir,
 						''
@@ -160,7 +160,7 @@ gulp.task('watch:release', function () {
 
 			// src - scss
 			gulp.watch([srcPath.concat('**/*.app.scss')])
-				.on('change', function (file) {
+				.on('change', file => {
 					var singleFile = file.replace(
 						currentDir,
 						''

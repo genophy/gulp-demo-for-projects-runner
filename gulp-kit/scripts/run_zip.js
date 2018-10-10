@@ -9,7 +9,7 @@ gulp.task('zip', gulp.series('default_start', () => {
 		process,
 		'zip',
 		'project',
-		function (argv) {
+		 (argv)=> {
 			const devPath  = './dest/dev/#project#/**/*'.replace(
 				'#project#',
 				argv
@@ -31,7 +31,7 @@ gulp.task('zip:release', gulp.series('default_start:release', () => {
 		process,
 		'zip',
 		'project',
-		function (argv) {
+		 (argv) => {
 			const releasePath = './dest/release/#project#/**/*'.replace(
 				'#project#',
 				argv

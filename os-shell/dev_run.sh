@@ -4,11 +4,11 @@
 
 #!/bin/bash
 #
-read -p "Enter Project Name to Start:" project
-if [ $project ] ; then
-    konsole --separate -e gulp default_start --project=$project
-    konsole --separate -e gulp watch --project=$project
-    konsole --separate -e gulp serve --project=$project
-else
-    echo ""
+read -p "Enter Project Name to Start[app]:" project
+if [ -z $project ] ; then
+	project="app"
 fi
+
+konsole --separate -e gulp default_start --project=$project
+konsole --separate -e gulp watch --project=$project
+konsole --separate -e gulp serve --project=$project
