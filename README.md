@@ -10,8 +10,8 @@
 ### 创建项目和视图页面: generate project and view
 >project不设置时，默认为app
 ```text
-gulp generate:project --project=note  # 创建项目
-gulp generate:view --project=note --view=index # 创建视图页面
+gulp generate:project --project=note  # 创建项目 # gulp gp --project=note
+gulp generate:view --project=note --view=index # 创建视图页面 # gulp gv --project=note --view=index
 
 gulp default_start --project=<projectname> # 默认dev模式打包
 gulp watch --project=<projectname> # dev模式监听改变
