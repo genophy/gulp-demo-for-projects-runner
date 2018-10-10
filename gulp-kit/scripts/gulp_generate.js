@@ -3,7 +3,7 @@ const gulp   = require('gulp'),
 
 /**
  * 初始化项目
- *    command:    gulp create:project --project=<projectname>
+ *    command:    gulp generate:project --project=<projectname>
  *    result:
  *
  *   |-projectname
@@ -12,13 +12,13 @@ const gulp   = require('gulp'),
  *   |-------site.scss
  */
 
-gulp.task('create:project', () => Script.create_init());
-gulp.task('cp', () => Script.create_init());
+gulp.task('generate:project', () => Script.generate_init());
+gulp.task('gp', () => Script.generate_init());
 
 /**
  * 创建项目下的模块
  *
- *    command:    gulp create:view --project=<projectname> --view=<viewname>
+ *    command:    gulp generate:view --project=<projectname> --view=<viewname>
  *    result:
  *
  *    |-projectname
@@ -29,5 +29,5 @@ gulp.task('cp', () => Script.create_init());
  *
  */
 
-gulp.task('create:view', () => Script.create_view());
-gulp.task('cv', () => Script.create_view());
+gulp.task('generate:view', () => Script.generate_view());
+gulp.task('gv', () => Script.generate_view());

@@ -7,11 +7,11 @@
 - 支持zip打包功能
 
 ## 用法
-### 创建项目和视图页面: create project and view
+### 创建项目和视图页面: generate project and view
 >project不设置时，默认为app
-```bash
-gulp create:project --project=note  # 创建项目
-gulp create:view --project=note --view=index # 创建视图页面
+```text
+gulp generate:project --project=note  # 创建项目
+gulp generate:view --project=note --view=index # 创建视图页面
 
 gulp default_start --project=<projectname> # 默认dev模式打包
 gulp watch --project=<projectname> # dev模式监听改变

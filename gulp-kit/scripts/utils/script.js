@@ -42,7 +42,7 @@ const isDirSync = (aPath) => {
 /**
  * 初始化项目
  *
- *    command:    gulp create:project --project=<projectname>
+ *    command:    gulp generate:project --project=<projectname>
  *    result:
  *
  *   |-projectname/
@@ -61,13 +61,13 @@ const isDirSync = (aPath) => {
  * @return {*}
  */
 
-exports.create_init = (projectName) => {
+exports.generate_init = (projectName) => {
 	projectName = projectName ? projectName : Config.gulpArgumentNameExist(
 		process,
 		'project'
 	);
 	if (!projectName) {
-		throw new Error('create_init no projectname');
+		throw new Error('generate_init no projectname');
 	}
 	const projectPath = './src/#project#/'.replace('#project#', projectName);
 	if (isDirSync(projectPath)) {
@@ -82,7 +82,7 @@ exports.create_init = (projectName) => {
 /**
  * 创建项目下的模块
  *
- *    command:    gulp create:view --project=<projectname> --view=<viewname>
+ *    command:    gulp generate:view --project=<projectname> --view=<viewname>
  *    result:
  *
  *    |-projectname/
@@ -96,7 +96,7 @@ exports.create_init = (projectName) => {
  * @param {string} viewName
  * @return {*}
  */
-exports.create_view = (projectName, viewName) => {
+exports.generate_view = (projectName, viewName) => {
 	projectName = projectName ? projectName : Config.gulpArgumentNameExist(
 		process,
 		'project'
@@ -106,7 +106,7 @@ exports.create_view = (projectName, viewName) => {
 		'view'
 	);
 	if (!projectName) {
-		throw new Error('create_view no projectname');
+		throw new Error('generate_view no projectname');
 	}
 
 	const projectPath     = './src/#project#/'.replace(
@@ -124,7 +124,7 @@ exports.create_view = (projectName, viewName) => {
 	// 若未输入名称，则抛出异常
 	if (!viewName) {
 		throw new Error(
-			'argument <name> is undefined. the usage:  gulp create:view --project=<projectname> --view=<viewname>');
+			'argument <name> is undefined. the usage:  gulp generate:view --project=<projectname> --view=<viewname>');
 	}
 
 	return gulp.src('./gulp-kit/template/view/template/**/*', {allowEmpty: true})
