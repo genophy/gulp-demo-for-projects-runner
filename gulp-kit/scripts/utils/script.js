@@ -131,7 +131,8 @@ exports.generate_view = (projectName, viewName) => {
 		.pipe(rename(path => {
 			path.basename = path.basename.replace('template', viewName);
 		}))
-		.pipe(replace('template', viewName))
+		.pipe(replace('#project#', projectName))
+		.pipe(replace('#template#', viewName))
 		.pipe(gulp.dest(projectViewPath.concat(viewName)));
 };
 
@@ -186,14 +187,14 @@ exports.html = (projectName, singleFile) => {
 		throw new Error('html no projectname');
 	}
 	let srcPath = './src/#project#/view/'.replace('#project#', projectName),
-		devPath = srcPath.replace('./src', './dest/dev');
+		devPath = srcPath.replace('./src', './dest/dev').replace('/view', '/');
 	// 若是单个文件，则src改成单文件路径
 	srcPath     = singleFile || srcPath.concat('**/*.app.html');
 
 	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(rename(path => {
 			path.basename = path.basename.replace('.app', '');
-			path.dirname  = path.basename;
+			path.dirname  = path.dirname.replace(new RegExp(`${path.basename}$`), '');
 		}))
 		.pipe(gulp.dest(devPath));
 
@@ -218,14 +219,14 @@ exports.html_release = (projectName, singleFile) => {
 		'#project#',
 		projectName
 		),
-		releasePath = srcPath.replace('./src', './dest/release');
+		releasePath = srcPath.replace('./src', './dest/release').replace('/view', '/');
 	// 若是单个文件，则src改成单文件路径
 	srcPath         = singleFile || srcPath.concat('**/*.app.html');
 
 	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(rename(path => {
 			path.basename = path.basename.replace('.app', '');
-			path.dirname  = path.basename;
+			path.dirname  = path.dirname.replace(new RegExp(`${path.basename}$`), '');
 		}))
 		.pipe(htmlMin({collapseWhitespace: true, removeComments: true, minifyJS: true, minifyCSS: true}))
 		.pipe(gulp.dest(releasePath));
@@ -384,7 +385,7 @@ exports.scss = (projectName, singleFile) => {
 		.pipe(gulpAutoPreFixer())
 		.pipe(rename(path => {
 			path.basename = path.basename.replace('.app', '');
-			path.dirname  = path.basename;
+			path.dirname  = path.dirname.replace(new RegExp(`${path.basename}$`), '');
 		}))
 		.pipe(gulp.dest(devPath));
 };
@@ -425,7 +426,7 @@ exports.scss_release = (projectName, singleFile) => {
 		.pipe(gulpAutoPreFixer())
 		.pipe(rename(path => {
 			path.basename = path.basename.replace('.app', '');
-			path.dirname  = path.basename;
+			path.dirname  = path.dirname.replace(new RegExp(`${path.basename}$`), '');
 		}))
 		.pipe(gulpCleanCSS({compatibility: 'ie8'}))
 		.pipe(gulp.dest(releasePath));
@@ -555,7 +556,7 @@ exports.webpack = (projectName, singleFile) => {
 		}))
 		.pipe(rename(path => {
 			path.basename = path.basename.replace('.app', '');
-			path.dirname  = path.basename;
+			path.dirname  = path.dirname.replace(new RegExp(`${path.basename}$`), '');
 		}))
 
 		.pipe(gulp.dest(devPath));
@@ -607,7 +608,7 @@ exports.webpack_release = (projectName, singleFile) => {
 		}))
 		.pipe(rename(path => {
 			path.basename = path.basename.replace('.app', '');
-			path.dirname  = path.basename;
+			path.dirname  = path.dirname.replace(new RegExp(`${path.basename}$`), '');
 		}))
 		.pipe(gulp.dest(releasePath));
 };

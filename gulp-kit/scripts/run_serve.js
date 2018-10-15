@@ -16,7 +16,7 @@ gulp.task('serve',  () => {
 
 			browserSync.init({
 				port     : Config.PORT.DEV_PORT,
-				startPath: '/view/index/index.html',
+				startPath: '/index.html',
 				browser  : 'google chrome', // windows: "chrome.exe"
 				server   : {
 					baseDir   : baseDir,
@@ -48,7 +48,7 @@ gulp.task('serve:release',  () => {
 
 			browserSync.init({
 				port     : Config.PORT.DEV_PORT,
-				startPath: '/view/index/index.html',
+				startPath: '/index.html',
 				browser  : 'google chrome', // windows: "chrome.exe"
 				server   : {
 					baseDir   : baseDir,
