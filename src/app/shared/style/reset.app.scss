@@ -1,0 +1,57 @@
+
+html { // 16rem === 1rem
+	font-size   : 81.25%; // 13px -== 1rem === 10pt
+	font-family : Helvetica Neue, Helvetica, Hiragino Sans GB, Microsoft Yahei, Heiti SC, WenQuanYi Micro Hei, Arial, sans-serif;
+}
+
+html, body {
+	height : 100%;
+}
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+	margin    : 0;
+	padding   : 0;
+	font-size : 14px;
+}
+
+address, cite, dfn, em, var {
+	font-style : normal;
+}
+
+code, kbd, pre, samp {
+	font-family : couriernew, courier, monospace;
+}
+
+small {
+	font-size : 12px;
+}
+
+ul, ol {
+	list-style : none;
+}
+
+a {
+	text-decoration : none;
+}
+
+a:hover {
+	text-decoration : underline;
+}
+
+sup {
+	vertical-align : text-top;
+}
+
+sub {
+	vertical-align : text-bottom;
+}
+
+fieldset, img {
+	border : 0;
+}
+
+a, button, input, select, textarea {
+	outline    : none;
+	box-shadow : none;
+}
+

@@ -1,12 +1,21 @@
-
 // colors Maps
 $colors : (
-		"black":#000,
-		"dark":#222,
-		"text":#393d41,
-		"white":#fff
+		bg:#f6f6f6,
+		black:#000,
+		blue:#3296fa,
+		dark: rgba(25, 31, 37, 1),
+		error:#fa5643,
+		error2: #fedada,
+		gray:rgba(25, 31, 37, 0.56),
+		gray2:rgba(25, 31, 37, 0.40),
+		gray3:rgba(25, 31, 37, 0.12),
+		gray4:rgba(25, 31, 37, 0.04),
+		green:#15bc83,
+		orange:#ff943e,
+		text:#393d41,
+		white:#fff,
+		yellow:#fee151
 );
-
 
 $borderType : (
 		border-a:border,
@@ -30,13 +39,14 @@ $fontSize : (
 		14:1.4rem,
 		12:1.2rem,
 		10:1.0rem,
-		header:1.8rem,
-		title:1.6rem,
-		text:1.4rem,
-		sub:1.2rem,
-		min:1.0rem
+		8:0.8rem,
+		6:0.6rem,
+		header:1.4rem,
+		title:1.2rem,
+		text:1.0rem,
+		sub:0.8rem,
+		min:0.6rem
 );
-
 
 // space Size Maps
 $spaceSize : (
@@ -65,8 +75,6 @@ $spaceType : (
 		m-t:margin-top,
 		m-b:margin-bottom
 );
-
-
 
 // layout Maps
 $layoutType : (

@@ -1,10 +1,20 @@
 // colors Maps
 $colors : (
-		"black":#000,
-		"dark":#222,
-		"text":#888,
-		"white":#fff,
-		"desc":#999
+		bg:#f6f6f6,
+		black:#000,
+		blue:#3296fa,
+		dark: rgba(25, 31, 37, 1),
+		error:#fa5643,
+		error2: #fedada,
+		gray:rgba(25, 31, 37, 0.56),
+		gray2:rgba(25, 31, 37, 0.40),
+		gray3:rgba(25, 31, 37, 0.12),
+		gray4:rgba(25, 31, 37, 0.04),
+		green:#15bc83,
+		orange:#ff943e,
+		text:#393d41,
+		white:#fff,
+		yellow:#fee151
 );
 
 $borderType : (
