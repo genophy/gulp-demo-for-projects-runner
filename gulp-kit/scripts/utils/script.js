@@ -630,13 +630,16 @@ exports.webpack_shared = (projectName, singleFile) => {
 	let srcPath = './src/#project#/shared/js/'.replace('#project#', projectName),
 		devPath = srcPath.replace('./src', './dest/dev');
 	// 若是单个文件，则src改成单文件路径
-	srcPath     = singleFile || srcPath.concat('**/*.js');
+	srcPath     = singleFile || srcPath.concat('**/*.app.js');
 
 	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(named())
 		// @see https://webpack.js.org/configuration/
 		.pipe(webpack({
 			mode: 'development'
+		}))
+		.pipe(rename(path => {
+			path.basename = path.basename.replace('.app', '');
 		}))
 		.pipe(gulp.dest(devPath));
 };
@@ -658,12 +661,15 @@ exports.webpack_shared_release = (projectName, singleFile) => {
 	let srcPath     = './src/#project#/shared/js/'.replace('#project#', projectName),
 		releasePath = srcPath.replace('./src', './dest/release');
 	// 若是单个文件，则src改成单文件路径
-	srcPath         = singleFile || srcPath.concat('**/*.js');
+	srcPath         = singleFile || srcPath.concat('**/*.app.js');
 
 	return gulp.src(srcPath, {allowEmpty: true})
 		.pipe(named())
 		.pipe(webpack({
 			mode: 'production'
+		}))
+		.pipe(rename(path => {
+			path.basename = path.basename.replace('.app', '');
 		}))
 		.pipe(gulp.dest(releasePath));
 };
