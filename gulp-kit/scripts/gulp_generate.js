@@ -8,8 +8,8 @@ const gulp   = require('gulp'),
  *
  *   |-projectname
  *   |---style
- *   |-----scss
- *   |-------site.scss
+ *   |-----less
+ *   |-------site.less
  */
 
 gulp.task('generate:project', () => Script.generate_init());
@@ -25,7 +25,7 @@ gulp.task('gp', () => Script.generate_init());
  *    |---viewname
  *    |-----viewname.app.html
  *    |-----viewname.app.js
- *    |-----viewname.app.scss
+ *    |-----viewname.app.less
  *
  */
 

@@ -7,7 +7,7 @@ if [ -z $project ] ; then
 fi
 
 osascript -e "tell app \"terminal\"
-	do script \"cd $gulp_root_path;gulp default_start:release --project=$project;exit\"
+	do script \"cd $gulp_root_path;gulp build:release --project=$project;exit\"
 end tell" -e "tell app \"terminal\"
 	do script \"cd $gulp_root_path;gulp watch:release --project=$project\"
 end tell" -e "tell app \"terminal\"

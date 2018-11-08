@@ -4,7 +4,7 @@ const gulp   = require('gulp'),
 /**
  * 打包dev目录
  */
-gulp.task('zip', gulp.series('default_start', () => {
+gulp.task('zip', gulp.series('build', () => {
 	return Config.gulpVerifyArgumentName(
 		process,
 		'zip',
@@ -26,7 +26,7 @@ gulp.task('zip', gulp.series('default_start', () => {
 /**
  * 打包release目录
  */
-gulp.task('zip:release', gulp.series('default_start:release', () => {
+gulp.task('zip:release', gulp.series('build:release', () => {
 	return Config.gulpVerifyArgumentName(
 		process,
 		'zip',

@@ -9,6 +9,6 @@ if [ -z $project ] ; then
 	project="app"
 fi
 
-konsole --separate -e gulp default_start --project=$project
+konsole --separate -e gulp build --project=$project
 konsole --separate -e gulp watch --project=$project
 konsole --separate -e gulp serve --project=$project
