@@ -1,12 +1,8 @@
 'use strict';
-const imagemin               = require('imagemin');
-const imageminJpegtran       = require('imagemin-jpegtran');
-const imageminJpegRecompress = require('imagemin-jpeg-recompress');
-
 const recursiveReadSync = require('recursive-readdir-sync');
-const imageminPngquant  = require('imagemin-pngquant');
 const fs                = require('fs');
 const gulp              = require('gulp');
+const babel             = require('gulp-babel');
 let LessAutoprefix      = require('less-plugin-autoprefix');
 let autoprefix          = new LessAutoprefix(
     {
@@ -237,6 +233,10 @@ exports.html = (projectName, singleFile) => {
     if (singleFile) devPath = getSingleFileDevPath(devPath);
     console.log('script:html:', devPath);
     return gulp.src(srcPath, {allowEmpty: true})
+        .pipe(replace('<%=assets%>', 'assets'))
+        .pipe(replace('<%=public%>', 'assets/public'))
+        .pipe(replace('<%=css%>', 'assets/css'))
+        .pipe(replace('<%=js%>', 'assets/js'))
         .pipe(rename(path => {
             path.basename = path.basename.replace('.app', '');
             path.dirname  = path.dirname.replace(new RegExp(`${path.basename}$`), '');
@@ -268,6 +268,10 @@ exports.html_release = (projectName, singleFile) => {
     if (singleFile) releasePath = getSingleFileDevPath(releasePath);
     console.log('script:html_release:', releasePath);
     return gulp.src(srcPath, {allowEmpty: true})
+        .pipe(replace('<%=assets%>', 'assets'))
+        .pipe(replace('<%=public%>', 'assets/public'))
+        .pipe(replace('<%=css%>', 'assets/css'))
+        .pipe(replace('<%=js%>', 'assets/js'))
         .pipe(rename(path => {
             path.basename = path.basename.replace('.app', '');
             path.dirname  = path.dirname.replace(new RegExp(`${path.basename}$`), '');
@@ -351,7 +355,6 @@ exports.img = (projectName, singleFile) => {
     let devPath = srcPath.replace(`./src/${projectName}/`, `./dest/dev/${projectName}/`).replace('**/*', '');
     if (singleFile) devPath = getSingleFileDevPath(devPath);
     console.log('script:img:', devPath);
-    // 不压缩
     return gulp.src(srcPath, {allowEmpty: true})
         .pipe(gulp.dest(devPath));
 };
@@ -377,18 +380,9 @@ exports.img_release = (projectName, singleFile) => {
         .replace('**/*', '');
     if (singleFile) releasePath = getSingleFileDevPath(releasePath);
 
-    // 当图片有.large.则不进行压缩
-    gulp.src(srcPath.concat('.large.*'), {allowEmpty: true})
-        .pipe(gulp.dest(releasePath));
     console.log('script:img_release:', releasePath);
-    // 只对没有.large.的文件进行压缩
-    return imagemin([srcPath, '!'.concat(srcPath).concat('.large.*')], releasePath, {
-        plugins: [
-            imageminJpegtran(),
-            imageminJpegRecompress(),
-            imageminPngquant({quality: '65-80'})
-        ]
-    });
+    return  gulp.src(srcPath, {allowEmpty: true})
+        .pipe(gulp.dest(releasePath));
 };
 
 /**
@@ -629,28 +623,9 @@ exports.webpack = (projectName, singleFile) => {
     console.log('script:webpack: ', devPath);
     return gulp.src(srcPath, {allowEmpty: true})
         .pipe(named())
-        // @see https://webpack.js.org/configuration/
-        .pipe(webpack({
-            mode  : 'development',
-            module: {
-                rules: [
-                    {
-                        test   : [/\.jsx?$/, /\.js?$/],
-                        exclude: /(node_modules)/,
-                        loader : 'babel-loader',
-                        query  : {
-                            plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-class-properties'],
-                            presets: ['@babel/env']
-                        }
-                    }
-                ]
-            },
-            // optimization: {
-            //     minimizer: [
-            //         new UglifyJsPlugin()
-            //     ]
-            // },
-            output: {}
+        .pipe(babel({
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-class-properties']
         }))
         .on('error', function(err) { // 报错防止中断
             console.error(err);

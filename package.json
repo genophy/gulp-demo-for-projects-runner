@@ -1,5 +1,5 @@
 {
-    "name": "gulp-demo-for-project-runner",
+    "name": "gulp-project-example",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
@@ -19,9 +19,7 @@
         "zip:release": "gulp zip:release",
         "deploy:release": "gulp deploy:release"
     },
-    "dependencies": {
-        "babel-polyfill": "^6.26.0"
-    },
+    "dependencies": {},
     "devDependencies": {
         "@babel/core": "^7.1.2",
         "@babel/plugin-proposal-class-properties": "^7.4.4",
@@ -38,6 +36,7 @@
         "express": "^4.16.3",
         "fs": "0.0.2",
         "gulp": "^4.0.0",
+        "gulp-babel": "^8.0.0",
         "gulp-clean": "^0.4.0",
         "gulp-clean-css": "^3.10.0",
         "gulp-htmlmin": "^5.0.1",
@@ -50,10 +49,6 @@
         "http": "0.0.0",
         "http-proxy-middleware": "^0.19.1",
         "https": "^1.0.0",
-        "imagemin": "^6.0.0",
-        "imagemin-jpeg-recompress": "^5.1.0",
-        "imagemin-jpegtran": "^5.0.2",
-        "imagemin-pngquant": "^6.0.0",
         "less-plugin-autoprefix": "^2.0.0",
         "path": "^0.12.7",
         "recursive-readdir-sync": "^1.0.6",
