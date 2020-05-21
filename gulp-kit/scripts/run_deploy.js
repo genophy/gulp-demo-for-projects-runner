@@ -1,5 +1,5 @@
 const gulp   = require('gulp'),
-      Config = require('./utils/config');
+      Config = require('../config');
 /**
  * 打包dev目录
  */

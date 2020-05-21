@@ -23,7 +23,7 @@ const less           = require('gulp-less');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const webpack        = require('webpack-stream');
 
-const Config = require('./config');
+const Config = require('../../config');
 
 /*
  * 获取单文件的路径

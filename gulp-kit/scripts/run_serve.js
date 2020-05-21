@@ -1,7 +1,7 @@
 const gulp        = require('gulp'),
       browserSync = require('browser-sync').create(),
       proxy       = require('http-proxy-middleware'),
-      Config      = require('./utils/config');
+      Config      = require('../config');
 
 /**
  * 启动服务器

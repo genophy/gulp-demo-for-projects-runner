@@ -1,5 +1,5 @@
 const gulp   = require('gulp'),
-      Config = require('./utils/config'),
+      Config = require('../config'),
       Script = require('./utils/script');
 
 /*
